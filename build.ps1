@@ -1,8 +1,6 @@
 cd angular-libs
 npm install
-ng build --configuration production
-
-Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker
+ng build broker --configuration production
 
 cd ..
 cd angular-menu
