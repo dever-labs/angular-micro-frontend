@@ -15,11 +15,13 @@ ng build --configuration production
 cd ..
 cd angular-toolbar
 npm install
-Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker -Force
+Remove-Item -Path node_modules/@czprz -Recurse
+Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker -Recurse -Force
 ng build --configuration production
 
 cd ..
 cd angular-shell
 npm install
-Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker -Force
+Remove-Item -Path node_modules/@czprz -Recurse
+Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker -Recurse -Force
 ng build --configuration production
