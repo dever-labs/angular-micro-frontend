@@ -6,19 +6,20 @@
   class="p-button-text p-button-rounded"
 ></button>
 
-<button
-  pButton
-  type="button"
-  icon="pi pi-cog"
-  class="p-button-rounded p-button-text"
+<p-button
+  [rounded]="true"
+  [text]="true"
   (click)="op.toggle($event)"
-></button>
+  icon="pi pi-cog"
+>
+
+</p-button>
 
 <p-overlayPanel #op styleClass="theme-menu">
   <p-button
     label="Light"
-    class="p-element"
-    styleClass="p-button-text light"
+    [text]="true"
+    styleClass="light"
     (click)="changeTheme('light-theme')"
   >
     <span class="color-circle"></span>
@@ -26,8 +27,8 @@
 
   <p-button
     label="Dark"
-    class="p-element"
-    styleClass="p-button-text dark"
+    [text]="true"
+    styleClass="dark"
     (click)="changeTheme('dark-theme')"
   >
     <span class="color-circle"></span>
