@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'lib-wind-guests',
-  templateUrl: './wind-guests.component.html',
-  styleUrls: ['./wind-guests.component.css'],
+    selector: 'lib-wind-guests',
+    templateUrl: './wind-guests.component.html',
+    styleUrls: ['./wind-guests.component.css'],
+    standalone: false
 })
 export class WindGuestsComponent implements OnInit {
   public data: any;

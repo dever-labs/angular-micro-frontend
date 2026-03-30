@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'lib-wind-directions-chart',
-  templateUrl: './wind-directions-chart.component.html',
-  styleUrls: ['./wind-directions-chart.component.css'],
+    selector: 'lib-wind-directions-chart',
+    templateUrl: './wind-directions-chart.component.html',
+    styleUrls: ['./wind-directions-chart.component.css'],
+    standalone: false
 })
 export class WindDirectionsChartComponent implements OnInit {
   public data: any;
