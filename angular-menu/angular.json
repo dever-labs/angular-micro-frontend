@@ -37,19 +37,56 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "ngx-build-plus:browser",
+          "builder": "@angular-architects/native-federation:build",
+          "options": {},
+          "configurations": {
+            "production": {
+              "target": "menu-app:esbuild:production"
+            },
+            "development": {
+              "target": "menu-app:esbuild:development",
+              "dev": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {
+            "target": "menu-app:serve-original:development",
+            "rebuildDelay": 500,
+            "dev": true,
+            "cacheExternalArtifacts": false,
+            "port": 0
+          }
+        },
+        "extract-i18n": {
+          "builder": "ngx-build-plus:extract-i18n",
+          "options": {
+            "browserTarget": "menu-app:build",
+            "extraWebpackConfig": "webpack.config.js"
+          }
+        },
+        "esbuild": {
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/menu",
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts",
+              "es-module-shims"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": [],
-            "extraWebpackConfig": "webpack.config.js",
-            "commonChunk": false
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -71,13 +108,10 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all",
-              "extraWebpackConfig": "webpack.prod.config.js"
+              "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -85,29 +119,20 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "ngx-build-plus:dev-server",
+        "serve-original": {
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "menu-app:build:production",
-              "extraWebpackConfig": "webpack.prod.config.js"
+              "buildTarget": "menu-app:esbuild:production"
             },
             "development": {
-              "browserTarget": "menu-app:build:development"
+              "buildTarget": "menu-app:esbuild:development"
             }
           },
           "defaultConfiguration": "development",
           "options": {
             "port": 4201,
-            "publicHost": "http://localhost/getModule/menu",
-            "extraWebpackConfig": "webpack.config.js"
-          }
-        },
-        "extract-i18n": {
-          "builder": "ngx-build-plus:extract-i18n",
-          "options": {
-            "browserTarget": "menu-app:build",
-            "extraWebpackConfig": "webpack.config.js"
+            "publicHost": "http://localhost/getModule/menu"
           }
         }
       }

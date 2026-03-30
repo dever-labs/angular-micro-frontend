@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
-import { loadRemoteModule } from "@angular-architects/module-federation";
+import { loadRemoteModule } from "@angular-architects/native-federation";
 
 @Component({
     selector: "app-menu",
@@ -14,12 +14,7 @@ export class MenuComponent implements OnInit {
   constructor() {}
 
   async ngOnInit(): Promise<void> {
-    const m = await loadRemoteModule({
-      type: "module",
-      remoteEntry: "http://localhost/getModule/menu/remoteEntry.js",
-      exposedModule: "./Component",
-    });
-
+    const m = await loadRemoteModule('menu', './Component');
     this.menuPlaceholder.createComponent(m.MenuComponent);
   }
 }
