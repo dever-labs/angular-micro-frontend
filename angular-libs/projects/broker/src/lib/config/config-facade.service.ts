@@ -1,46 +1,45 @@
 import { Injectable } from '@angular/core';
-import { ConfigRepositoryService } from './config-repository.service';
+import { AppStateService } from '../app-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigFacadeService {
-  constructor(private readonly configRepository: ConfigRepositoryService) {}
+  constructor(private readonly appState: AppStateService) {}
 
   isSet(): boolean {
-    return !!this.getToken() && !!this.getUri() && !!this.getUsers();
+    return !!this.getToken() && !!this.getUri() && !!this.getUsers().length;
   }
 
   getUsers(): string[] {
-    const users = this.configRepository.get('users');
-    return users ? JSON.parse(users) : [];
+    return this.appState.users();
   }
 
   setUsers(users: string[]): void {
-    this.configRepository.set('users', JSON.stringify(users));
+    this.appState.users.set(users);
   }
 
   getToken(): string | null {
-    return this.configRepository.get('token');
+    return this.appState.token();
   }
 
   setToken(token: string): void {
-    this.configRepository.set('token', token);
+    this.appState.token.set(token);
   }
 
   getUri(): string | null {
-    return this.configRepository.get('uri');
+    return this.appState.uri();
   }
 
   setUri(uri: string): void {
-    this.configRepository.set('uri', uri);
+    this.appState.uri.set(uri);
   }
 
   getTheme(): string | null {
-    return this.configRepository.get('theme');
+    return this.appState.theme();
   }
 
   setTheme(theme: string): void {
-    this.configRepository.set('theme', theme);
+    this.appState.theme.set(theme);
   }
 }

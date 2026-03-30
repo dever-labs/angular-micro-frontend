@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4203 --serve-path /getModule/overview/",
+    "start": "ng serve --port 4203",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
+    "postinstall": "node ../scripts/install-native-bindings.js"
   },
   "private": true,
   "dependencies": {

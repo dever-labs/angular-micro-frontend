@@ -12,6 +12,11 @@ module.exports = withNativeFederation({
       strictVersion: true,
       requiredVersion: "auto",
     }),
+    "@czprz/broker": {
+      singleton: true,
+      strictVersion: true,
+      requiredVersion: "auto",
+    },
   },
 
   skip: [
