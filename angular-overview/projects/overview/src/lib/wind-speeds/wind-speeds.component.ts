@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'lib-wind-speeds',
-  templateUrl: './wind-speeds.component.html',
-  styleUrls: ['./wind-speeds.component.css'],
+    selector: 'lib-wind-speeds',
+    templateUrl: './wind-speeds.component.html',
+    styleUrls: ['./wind-speeds.component.css'],
+    standalone: false
 })
 export class WindSpeedsComponent implements OnInit {
   public data: any;

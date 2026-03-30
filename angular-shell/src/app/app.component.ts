@@ -1,12 +1,13 @@
-import {Component, HostListener, Inject} from "@angular/core";
+import {Component, HostListener, Inject, DOCUMENT} from "@angular/core";
 import { PrimeNGConfig } from "primeng/api";
 import { ThemeService } from "./common/theme.service";
-import {DOCUMENT} from "@angular/common";
+
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"],
+    standalone: false
 })
 export class AppComponent {
   @HostListener('window:scroll', ['$event'])

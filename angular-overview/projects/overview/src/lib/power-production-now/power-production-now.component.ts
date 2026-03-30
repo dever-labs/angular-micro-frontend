@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'lib-power-production-now',
-  templateUrl: './power-production-now.component.html',
-  styleUrls: ['./power-production-now.component.css'],
+    selector: 'lib-power-production-now',
+    templateUrl: './power-production-now.component.html',
+    styleUrls: ['./power-production-now.component.css'],
+    standalone: false
 })
 export class PowerProductionNowComponent implements OnInit {
   public data: any;
