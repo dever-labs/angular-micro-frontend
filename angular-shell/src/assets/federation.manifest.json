@@ -1,0 +1,5 @@
+{
+  "menu": "http://localhost/getModule/menu/remoteEntry.json",
+  "toolbar": "http://localhost/getModule/toolbar/remoteEntry.json",
+  "overview": "http://localhost/getModule/overview/remoteEntry.json"
+}

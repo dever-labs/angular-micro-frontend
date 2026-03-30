@@ -19,7 +19,7 @@ export class ThemeService {
     const theme = this.configFacade.getTheme() || "light-theme";
     this.changeTheme(theme);
 
-    this.broker.get<string>("theme").subscribe((theme) => {
+    this.broker.get$<string>("theme").subscribe((theme) => {
       this.changeTheme(theme);
       this.configFacade.setTheme(theme);
     });

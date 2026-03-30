@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import {WelcomeComponent} from "./welcome/welcome.component";
+import { loadRemoteModule } from "@angular-architects/native-federation";
+import { WelcomeComponent } from "./welcome/welcome.component";
 
 const routes: Routes = [
   {
     path: "dashboard",
-    // @ts-ignore
-    loadChildren: () => import('overview/Module').then(m => m.OverviewModule)
+    loadChildren: () => loadRemoteModule('overview', './Module').then(m => m.OverviewModule)
   },
   {
     path: "**",
