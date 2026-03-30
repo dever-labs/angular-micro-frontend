@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
 import { loadRemoteModule } from '@angular-architects/module-federation';
 
 @Component({
-  selector: "app-toolbar",
-  templateUrl: "./toolbar.component.html",
-  styleUrls: ["./toolbar.component.scss"],
+    selector: "app-toolbar",
+    templateUrl: "./toolbar.component.html",
+    styleUrls: ["./toolbar.component.scss"],
+    standalone: false
 })
 export class ToolbarComponent implements OnInit {
   @ViewChild("toolbarPlaceholder", { read: ViewContainerRef }) toolbarPlaceholder!: ViewContainerRef;
