@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'lib-power-production',
-  templateUrl: './power-production.component.html',
-  styleUrls: ['./power-production.component.css'],
+    selector: 'lib-power-production',
+    templateUrl: './power-production.component.html',
+    styleUrls: ['./power-production.component.css'],
+    standalone: false
 })
 export class PowerProductionComponent implements OnInit {
   public basicData: any;

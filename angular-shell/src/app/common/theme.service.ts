@@ -1,7 +1,7 @@
-import { Inject, Injectable } from "@angular/core";
+import { Inject, Injectable, DOCUMENT } from "@angular/core";
 import { BrokerService } from "@czprz/broker";
 import { ConfigFacadeService } from "./config/config-facade.service";
-import { DOCUMENT } from "@angular/common";
+
 
 @Injectable({
   providedIn: "root",
