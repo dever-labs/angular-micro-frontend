@@ -1,27 +1,18 @@
-cd angular-libs
-npm install
+# Build broker library first, then build all apps.
+# @czprz/broker is referenced via "file:../angular-libs/dist/broker" in each app's package.json.
+# Run `npm install --legacy-peer-deps` in each app to update the symlink after a broker rebuild.
+
+Set-Location angular-libs
+npm install --legacy-peer-deps
 ng build broker --configuration production
 
-cd ..
-cd angular-menu
-npm install
-ng build --configuration production
+Set-Location ..
+foreach ($dir in @("angular-menu", "angular-overview", "angular-toolbar", "angular-shell")) {
+    Write-Host "Building $dir..."
+    Set-Location $dir
+    npm install --legacy-peer-deps
+    ng build --configuration production
+    Set-Location ..
+}
 
-cd ..
-cd angular-overview
-npm install
-ng build --configuration production
-
-cd ..
-cd angular-toolbar
-npm install
-Remove-Item -Path node_modules/@czprz -Recurse
-Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker -Recurse -Force
-ng build --configuration production
-
-cd ..
-cd angular-shell
-npm install
-Remove-Item -Path node_modules/@czprz -Recurse
-Copy-Item -Path ../angular-libs/dist/broker -Destination node_modules/@czprz/broker -Recurse -Force
-ng build --configuration production
+Write-Host "Build complete."
