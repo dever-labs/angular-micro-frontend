@@ -7,11 +7,13 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
+    "postinstall": "node ../scripts/install-native-bindings.js"
   },
   "private": true,
   "dependencies": {
     "@angular-architects/module-federation": "^21.2.2",
+    "@angular-architects/native-federation": "^21.2.3",
+    "@angular-devkit/core": "^21.2.5",
     "@angular/animations": "^21.2.6",
     "@angular/common": "^21.2.6",
     "@angular/compiler": "^21.2.6",
@@ -20,12 +22,14 @@
     "@angular/platform-browser": "^21.2.6",
     "@angular/platform-browser-dynamic": "^21.2.6",
     "@angular/router": "^21.2.6",
+    "@czprz/broker": "file:../angular-libs/dist/broker",
     "prettier": "^3.0.3",
     "primeicons": "^6.0.1",
     "primeng": "^20.4.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
-    "zone.js": "~0.15.1"
+    "zone.js": "~0.15.1",
+    "es-module-shims": "^2.8.0"
   },
   "overrides": {
     "node-forge": "^1.4.0"

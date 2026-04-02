@@ -12,10 +12,9 @@
   (click)="op.toggle($event)"
   icon="pi pi-cog"
 >
-
 </p-button>
 
-<p-overlayPanel #op styleClass="theme-menu">
+<p-popover #op styleClass="theme-menu">
   <p-button
     label="Light"
     [text]="true"
@@ -33,4 +32,4 @@
   >
     <span class="color-circle"></span>
   </p-button>
-</p-overlayPanel>
+</p-popover>

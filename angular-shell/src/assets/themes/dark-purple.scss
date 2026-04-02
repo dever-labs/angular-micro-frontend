@@ -1,5 +1,6 @@
-@import "../../../node_modules/primeng/resources/themes/bootstrap4-dark-purple/theme.css";
+/* Dark theme - applied via .dark-theme body class which activates Aura dark mode. */
 
-:root {
+.dark-theme {
   --sgre-icon: url(../../assets/icons/sgre-logo.svg);
+  color-scheme: dark;
 }

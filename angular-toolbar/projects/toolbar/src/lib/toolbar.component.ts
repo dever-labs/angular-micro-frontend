@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { BrokerService } from '@czprz/broker';
+import { Component } from '@angular/core';
+import { AppStateService } from '@czprz/broker';
 
 @Component({
     selector: 'lib-toolbar',
@@ -7,12 +7,10 @@ import { BrokerService } from '@czprz/broker';
     styleUrls: ['./toolbar.component.scss'],
     standalone: false
 })
-export class ToolbarComponent implements OnInit {
-  constructor(private readonly broker: BrokerService) {}
-
-  ngOnInit(): void {}
+export class ToolbarComponent {
+  constructor(private readonly appState: AppStateService) {}
 
   public changeTheme(theme: string): void {
-    this.broker.set('theme', theme);
+    this.appState.theme.set(theme);
   }
 }

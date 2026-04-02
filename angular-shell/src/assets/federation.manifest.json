@@ -1,0 +1,5 @@
+{
+  "menu": "http://localhost:4201/remoteEntry.json",
+  "toolbar": "http://localhost:4202/remoteEntry.json",
+  "overview": "http://localhost:4203/remoteEntry.json"
+}
