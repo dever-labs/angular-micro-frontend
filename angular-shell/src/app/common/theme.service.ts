@@ -1,5 +1,5 @@
-import { Inject, Injectable, DOCUMENT } from "@angular/core";
-import { BrokerService } from "@czprz/broker";
+import { effect, Inject, Injectable, DOCUMENT } from "@angular/core";
+import { AppStateService } from "@czprz/broker";
 import { ConfigFacadeService } from "./config/config-facade.service";
 
 
@@ -7,39 +7,34 @@ import { ConfigFacadeService } from "./config/config-facade.service";
   providedIn: "root",
 })
 export class ThemeService {
-  public theme: string = "";
+  get theme(): string {
+    return this.appState.theme();
+  }
 
   constructor(
-    private readonly broker: BrokerService,
+    private readonly appState: AppStateService,
     private readonly configFacade: ConfigFacadeService,
     @Inject(DOCUMENT) private readonly document: Document
-  ) {}
-
-  public start(): void {
-    const theme = this.configFacade.getTheme() || "light-theme";
-    this.changeTheme(theme);
-
-    this.broker.get<string>("theme").subscribe((theme) => {
-      this.changeTheme(theme);
-      this.configFacade.setTheme(theme);
+  ) {
+    effect(() => {
+      this.applyTheme(this.appState.theme());
     });
   }
 
-  private changeTheme(theme: string): void {
-    const header = this.document.getElementsByTagName("head")[0];
-    let themeLink = this.document.getElementById(
-      "theme-css"
-    ) as HTMLLinkElement;
-
-    if (!themeLink) {
-      themeLink = this.document.createElement("link");
-      themeLink.id = "theme-css";
-      themeLink.rel = "stylesheet";
-      header.appendChild(themeLink);
+  public start(): void {
+    const persisted = this.configFacade.getTheme();
+    if (persisted) {
+      this.appState.theme.set(persisted);
     }
+  }
 
-    themeLink.href = theme + ".css";
-
-    this.theme = theme;
+  private applyTheme(theme: string): void {
+    const body = this.document.body;
+    if (theme === 'dark-theme' || theme.includes('dark')) {
+      body.classList.add('dark-theme');
+    } else {
+      body.classList.remove('dark-theme');
+    }
   }
 }
+

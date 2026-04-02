@@ -1,0 +1,27 @@
+{
+  "name": "angular-micro-frontend",
+  "private": true,
+  "workspaces": [
+    "angular-libs",
+    "angular-menu",
+    "angular-toolbar",
+    "angular-overview",
+    "angular-shell"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/install-native-bindings.js",
+    "install:all": "npm install --legacy-peer-deps && npm run --workspaces install --if-present",
+    "build:libs": "cd angular-libs && npx ng build broker --configuration production",
+    "start": "concurrently -n menu,toolbar,overview,shell -c cyan,blue,magenta,green \"npm run start --workspace=angular-menu\" \"npm run start --workspace=angular-toolbar\" \"npm run start --workspace=angular-overview\" \"npm run start --workspace=angular-shell\"",
+    "start:shell": "npm run start --workspace=angular-shell",
+    "start:menu": "npm run start --workspace=angular-menu",
+    "start:toolbar": "npm run start --workspace=angular-toolbar",
+    "start:overview": "npm run start --workspace=angular-overview"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@primeng/themes": "^21.0.4"
+  }
+}

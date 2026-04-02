@@ -17,10 +17,6 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "paths": {
-      "menu": ["dist/menu"],
-      "test": ["dist/test"]
-    },
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
