@@ -1,5 +1,5 @@
 {
-  "menu": "http://localhost/getModule/menu/remoteEntry.json",
-  "toolbar": "http://localhost/getModule/toolbar/remoteEntry.json",
-  "overview": "http://localhost/getModule/overview/remoteEntry.json"
+  "menu": "http://localhost:8080/getModule/menu/remoteEntry.json",
+  "toolbar": "http://localhost:8080/getModule/toolbar/remoteEntry.json",
+  "overview": "http://localhost:8080/getModule/overview/remoteEntry.json"
 }
