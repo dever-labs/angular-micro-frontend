@@ -23,6 +23,14 @@ export class WindGuestsComponent implements OnInit {
         },
       ],
     };
+
+    this.chartOptions = {
+      plugins: {
+        legend: {
+          labels: { color: '#495057' },
+        },
+      },
+    };
   }
 
   getLightTheme() {

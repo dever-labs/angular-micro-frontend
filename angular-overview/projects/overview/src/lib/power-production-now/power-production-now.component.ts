@@ -46,6 +46,21 @@ export class PowerProductionNowComponent implements OnInit {
         },
       ],
     };
+
+    this.chartOptions = {
+      plugins: {
+        legend: {
+          labels: { color: '#495057' },
+        },
+      },
+      scales: {
+        r: {
+          pointLabels: { color: '#495057' },
+          grid: { color: '#ebedef' },
+          angleLines: { color: '#ebedef' },
+        },
+      },
+    };
   }
 
   getLightTheme() {
