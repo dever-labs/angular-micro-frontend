@@ -27,7 +27,7 @@
             "target": "toolbar-app:serve-original:development",
             "rebuildDelay": 500,
             "dev": true,
-            "cacheExternalArtifacts": false,
+            "cacheExternalArtifacts": true,
             "port": 0
           }
         },
