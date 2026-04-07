@@ -1,4 +1,4 @@
-import { effect, Inject, Injectable, DOCUMENT } from "@angular/core";
+import { effect, inject, Injectable, DOCUMENT } from "@angular/core";
 import { AppStateService } from "@czprz/broker";
 import { ConfigFacadeService } from "./config/config-facade.service";
 
@@ -7,6 +7,8 @@ import { ConfigFacadeService } from "./config/config-facade.service";
   providedIn: "root",
 })
 export class ThemeService {
+  private readonly document = inject(DOCUMENT);
+
   get theme(): string {
     return this.appState.theme();
   }
@@ -14,7 +16,6 @@ export class ThemeService {
   constructor(
     private readonly appState: AppStateService,
     private readonly configFacade: ConfigFacadeService,
-    @Inject(DOCUMENT) private readonly document: Document
   ) {
     effect(() => {
       this.applyTheme(this.appState.theme());
