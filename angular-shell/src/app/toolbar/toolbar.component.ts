@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from "@angular/core";
 import { loadRemoteModule } from "@angular-architects/native-federation";
 
 @Component({
@@ -7,13 +7,15 @@ import { loadRemoteModule } from "@angular-architects/native-federation";
     styleUrls: ["./toolbar.component.scss"],
     standalone: false
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements AfterViewInit {
   @ViewChild("toolbarPlaceholder", { read: ViewContainerRef }) toolbarPlaceholder!: ViewContainerRef;
 
-  constructor() {}
-
-  async ngOnInit(): Promise<void> {
-    const m = await loadRemoteModule('toolbar', './Component');
-    this.toolbarPlaceholder.createComponent(m.ToolbarComponent);
+  async ngAfterViewInit(): Promise<void> {
+    try {
+      const m = await loadRemoteModule('toolbar', './Component');
+      this.toolbarPlaceholder.createComponent(m.ToolbarComponent);
+    } catch (err) {
+      console.error('[shell] Failed to load toolbar remote:', err);
+    }
   }
 }
