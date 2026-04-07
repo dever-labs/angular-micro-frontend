@@ -29,6 +29,19 @@ export class WindDirectionsChartComponent implements OnInit {
       ],
       labels: ['Red', 'Green', 'Yellow', 'Grey', 'Blue'],
     };
+
+    this.chartOptions = {
+      plugins: {
+        legend: {
+          labels: { color: '#495057' },
+        },
+      },
+      scales: {
+        r: {
+          grid: { color: '#ebedef' },
+        },
+      },
+    };
   }
 
   getLightTheme() {
