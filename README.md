@@ -140,7 +140,7 @@ The script:
 docker-compose up -d
 ```
 
-Open **http://localhost** — all traffic flows through the nginx proxy, mirroring the Kubernetes ingress setup.
+Open **http://localhost:8080** — all traffic flows through the nginx proxy, mirroring the Kubernetes ingress setup.
 
 ```bash
 docker-compose down
@@ -163,7 +163,7 @@ docker-compose down
 
 | Service | Port |
 |---|---|
-| proxy (entry point) | 80 |
+| proxy (entry point) | 8080 |
 | shell | 4200 |
 | menu | 4201 |
 | toolbar | 4202 |
