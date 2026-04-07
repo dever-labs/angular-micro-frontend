@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from "@angular/core";
 import { loadRemoteModule } from "@angular-architects/native-federation";
 
 @Component({
@@ -7,14 +7,16 @@ import { loadRemoteModule } from "@angular-architects/native-federation";
     styleUrls: ["./menu.component.scss"],
     standalone: false
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements AfterViewInit {
   @ViewChild("menuPlaceholder", { read: ViewContainerRef })
   menuPlaceholder!: ViewContainerRef;
 
-  constructor() {}
-
-  async ngOnInit(): Promise<void> {
-    const m = await loadRemoteModule('menu', './Component');
-    this.menuPlaceholder.createComponent(m.MenuComponent);
+  async ngAfterViewInit(): Promise<void> {
+    try {
+      const m = await loadRemoteModule('menu', './Component');
+      this.menuPlaceholder.createComponent(m.MenuComponent);
+    } catch (err) {
+      console.error('[shell] Failed to load menu remote:', err);
+    }
   }
 }
