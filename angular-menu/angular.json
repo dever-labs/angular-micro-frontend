@@ -131,8 +131,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "port": 4201,
-            "publicHost": "http://localhost/getModule/menu"
+            "port": 4201
           }
         }
       }
