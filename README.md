@@ -86,9 +86,44 @@ angular-micro-frontend/
 
 ## Getting Started
 
-### Build
+### Local development (recommended for first-time setup)
 
-Run the PowerShell build script from the repository root. It installs dependencies and produces production builds for every app:
+The fastest way to see the app running is with Node directly — no Docker required.
+
+**1. Install dependencies**
+
+```bash
+npm install --legacy-peer-deps
+```
+
+This installs the root workspace and all sub-packages in one go.
+
+**2. Start everything**
+
+```bash
+npm run dev
+```
+
+This builds the shared `broker` library and then starts all four apps concurrently with colour-coded output:
+
+| Colour | App | URL |
+|---|---|---|
+| cyan | menu | http://localhost:4201 |
+| blue | toolbar | http://localhost:4202 |
+| magenta | overview | http://localhost:4203 |
+| green | shell | http://localhost:4200 |
+
+Open **http://localhost:4200** in your browser. The shell loads and lazily pulls in each remote as you navigate.
+
+> The `dev` script is equivalent to running `npm run build:libs && npm run start`. Individual apps can also be started in isolation with `npm run start:shell`, `start:menu`, `start:toolbar`, or `start:overview`.
+
+---
+
+### Production-like run (Docker)
+
+To test the full nginx proxy setup as it would run in a real deployment:
+
+### Build
 
 ```powershell
 .\build.ps1
@@ -101,15 +136,11 @@ The script:
 
 ### Run
 
-Once all apps are built, start all services with Docker Compose:
-
 ```bash
 docker-compose up -d
 ```
 
-Open your browser at **[http://localhost](http://localhost)** — the nginx proxy serves the shell and lazily loads each micro-frontend on demand.
-
-To stop all services:
+Open **http://localhost** — all traffic flows through the nginx proxy, mirroring the Kubernetes ingress setup.
 
 ```bash
 docker-compose down
@@ -118,6 +149,17 @@ docker-compose down
 ---
 
 ## Ports
+
+**Local dev** (`npm run dev`):
+
+| Service | URL |
+|---|---|
+| shell | http://localhost:4200 |
+| menu | http://localhost:4201 |
+| toolbar | http://localhost:4202 |
+| overview | http://localhost:4203 |
+
+**Docker / production** (`docker-compose up`):
 
 | Service | Port |
 |---|---|

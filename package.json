@@ -16,7 +16,8 @@
     "start:shell": "npm run start --workspace=angular-shell",
     "start:menu": "npm run start --workspace=angular-menu",
     "start:toolbar": "npm run start --workspace=angular-toolbar",
-    "start:overview": "npm run start --workspace=angular-overview"
+    "start:overview": "npm run start --workspace=angular-overview",
+    "dev": "npm run build:libs && npm run start"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
