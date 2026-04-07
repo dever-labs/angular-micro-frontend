@@ -2,9 +2,9 @@ body {
   margin: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: var(--surface-ground);
-  font-family: var(--font-family);
-  color: var(--text-color);
+  background-color: var(--p-surface-50);
+  font-family: 'Inter var', Inter, system-ui, -apple-system, sans-serif;
+  color: var(--p-text-color);
   font-weight: 400;
 }
 
