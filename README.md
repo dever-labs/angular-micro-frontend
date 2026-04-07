@@ -139,75 +139,68 @@ docker-compose down
 
 ### Why K8s and micro-frontends are a natural fit
 
-In the Docker Compose setup, adding or removing a micro-frontend means editing `nginx.conf` and `docker-compose.yml` by hand, then redeploying everything. Kubernetes removes that friction entirely.
+In the Docker Compose setup, adding or removing a micro-frontend means editing `nginx.conf` and `docker-compose.yml` by hand, then redeploying everything. Kubernetes — combined with Helm — removes that friction entirely.
 
-Each micro-frontend becomes its own **Deployment + Service**, and a single **Ingress** resource replaces the hand-rolled nginx proxy. To add a new micro-frontend you add one Deployment, one Service, and one path rule to the Ingress — no other services are touched or restarted. Removing one is equally surgical.
+The key insight is that **each micro-frontend ships its own Helm chart**. It owns its Deployment, Service, and Ingress rule. No other chart needs to change when it is installed or removed. The nginx Ingress controller merges path rules from all installed Ingress resources automatically, so each chart is fully self-contained and independently deployable.
 
 Additional benefits in K8s:
 
 - **Independent scaling** — a heavily used `overview` pod can scale to 10 replicas while `menu` stays at 1.
 - **Independent rollouts** — deploy a new version of `toolbar` with a rolling update while everything else keeps running.
 - **Health-based traffic** — readiness/liveness probes keep broken pods out of rotation automatically.
-- **Zero-downtime ingress changes** — nginx Ingress controllers reload config without dropping connections.
+- **Zero-downtime ingress changes** — nginx Ingress controllers merge and reload rules without dropping connections.
 
-### Example manifests
+### Helm chart structure
 
-Each micro-frontend follows the same pattern. Here is `overview` as a representative example:
+There is a **base chart** that is always present — it contains the shell, the menu-service, and any other core infrastructure. Everything else is optional and can be installed or removed independently.
 
-```yaml
-# overview-deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: overview
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: overview
-  template:
-    metadata:
-      labels:
-        app: overview
-    spec:
-      containers:
-        - name: overview
-          image: overview:latest
-          ports:
-            - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: overview
-spec:
-  selector:
-    app: overview
-  ports:
-    - port: 80
+```
+charts/
+├── base/                   # Always installed — shell, menu-service, ingress controller
+│   ├── Chart.yaml
+│   └── templates/
+│       ├── shell-deployment.yaml
+│       ├── shell-service.yaml
+│       ├── shell-ingress.yaml
+│       ├── menu-service-deployment.yaml
+│       └── menu-service-service.yaml
+│
+├── overview/               # Optional — install or remove without touching anything else
+│   ├── Chart.yaml
+│   └── templates/
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       └── ingress.yaml    # Owns its own /getModule/overview path rule
+│
+├── toolbar/                # Optional
+│   ├── Chart.yaml
+│   └── templates/
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       └── ingress.yaml
+│
+└── reporting/              # Optional — a brand-new team deploys this independently
+    ├── Chart.yaml
+    └── templates/
+        ├── deployment.yaml
+        ├── service.yaml
+        └── ingress.yaml
 ```
 
-All micro-frontends are then wired together through a single Ingress:
+Each optional chart's Ingress is self-contained. Here is `overview` as an example:
 
 ```yaml
-# ingress.yaml
+# charts/overview/templates/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: micro-frontend-ingress
+  name: overview
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: shell
-                port:
-                  number: 80
           - path: /getModule/overview(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
@@ -215,28 +208,19 @@ spec:
                 name: overview
                 port:
                   number: 80
-          - path: /getModule/menu(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: menu
-                port:
-                  number: 80
-          - path: /getModule/toolbar(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: toolbar
-                port:
-                  number: 80
 ```
 
-To add a brand-new micro-frontend (e.g. `reporting`), the only changes needed are:
-1. Deploy its `Deployment` + `Service`.
-2. Append one `path` block to the Ingress.
-3. Register it in the menu-service (see below) — **no rebuild of the shell required**.
+Installing and removing a micro-frontend is a single Helm command:
 
-But you can remove even step 2 by automating Ingress management. Tools like [external-dns](https://github.com/kubernetes-sigs/external-dns) or a custom [Kubernetes operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) can watch for new micro-frontend Deployments (identified by a label such as `role: micro-frontend`) and patch the Ingress automatically. Combined with the menu-service below, **deploying a new micro-frontend becomes a single `kubectl apply`** — the cluster routes to it, and the shell discovers it, with no human in the loop.
+```bash
+# Add a new micro-frontend — the cluster starts routing to it immediately
+helm install overview ./charts/overview
+
+# Remove it — the Ingress rule disappears with the chart
+helm uninstall overview
+```
+
+Combined with the menu-service's self-registration (described below), **a single `helm install` is all it takes** to make a new feature live for the right users — and `helm uninstall` cleanly removes it without touching any other chart.
 
 ---
 
@@ -348,8 +332,8 @@ Combining K8s, self-registering micro-frontends, and a dynamic shell produces a 
 ```
 Developer ships a new micro-frontend
   │
-  ├─ 1. kubectl apply -f reporting-deployment.yaml
-  │        K8s schedules pod, Ingress rule added (operator or manual)
+  ├─ 1. helm install reporting ./charts/reporting
+  │        K8s schedules pod, chart's own Ingress rule goes live immediately
   │
   ├─ 2. Pod starts → POST /api/register  (self-registration)
   │        menu-service stores the entry with its permissions
@@ -366,8 +350,9 @@ Developer ships a new micro-frontend
 
 Developer removes a micro-frontend
   │
-  ├─ 1. kubectl delete deployment reporting
+  ├─ 1. helm uninstall reporting
   │        Pod shutdown triggers preStop hook → DELETE /api/register/reporting
+  │        Chart's Ingress rule is removed
   │
   └─ 2. Next shell load: /reporting no longer in menu-items
            Route and nav link disappear automatically ✓
