@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, DOCUMENT} from "@angular/core";
+import {Component, HostListener, inject, DOCUMENT} from "@angular/core";
 import { ThemeService } from "./common/theme.service";
 
 
@@ -9,16 +9,15 @@ import { ThemeService } from "./common/theme.service";
     standalone: false
 })
 export class AppComponent {
+  private readonly document = inject(DOCUMENT);
+
   @HostListener('window:scroll')
   onScroll() {
     // @ts-ignore
     document.documentElement.dataset['scroll'] = window.scrollY;
   }
 
-  constructor(
-    private readonly theme: ThemeService,
-    @Inject(DOCUMENT) private readonly document: Document
-  ) {}
+  constructor(private readonly theme: ThemeService) {}
 
   ngOnInit(): void {
     this.theme.start();
