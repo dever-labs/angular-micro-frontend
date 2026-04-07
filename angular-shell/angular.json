@@ -83,16 +83,8 @@
               "src/assets"
             ],
             "styles": [
-              {
-                "input": "src/assets/themes/light.scss",
-                "bundleName": "light-theme",
-                "inject": false
-              },
-              {
-                "input": "src/assets/themes/dark-purple.scss",
-                "bundleName": "dark-theme",
-                "inject": false
-              },
+              "src/assets/themes/light.scss",
+              "src/assets/themes/dark-purple.scss",
               "node_modules/primeicons/primeicons.css",
               "src/styles.scss"
             ],
