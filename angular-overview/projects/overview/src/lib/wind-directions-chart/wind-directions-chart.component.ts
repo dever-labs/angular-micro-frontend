@@ -31,6 +31,7 @@ export class WindDirectionsChartComponent implements OnInit {
     };
 
     this.chartOptions = {
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: { color: '#495057' },

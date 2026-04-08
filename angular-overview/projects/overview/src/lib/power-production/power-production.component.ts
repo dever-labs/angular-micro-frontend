@@ -12,6 +12,7 @@ export class PowerProductionComponent implements OnInit {
 
   ngOnInit() {
     this.basicOptions = {
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: { color: '#495057' },
