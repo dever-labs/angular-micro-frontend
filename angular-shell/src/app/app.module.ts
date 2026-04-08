@@ -11,12 +11,13 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { FooterComponent } from './footer/footer.component';
 import { CardModule } from "primeng/card";
 import { ChartModule } from "primeng/chart";
+import { MenuModule } from "primeng/menu";
 import { providePrimeNG } from "primeng/config";
 import Aura from "@primeuix/themes/aura";
 
 @NgModule({
   declarations: [AppComponent, ToolbarComponent, MenuComponent, WelcomeComponent, FooterComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, BrokerModule, CardModule, ChartModule],
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, BrokerModule, CardModule, ChartModule, MenuModule],
   providers: [
     providePrimeNG({
       ripple: true,
