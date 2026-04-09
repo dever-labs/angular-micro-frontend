@@ -85,7 +85,7 @@
             "styles": [
               "src/assets/themes/light.scss",
               "src/assets/themes/dark-purple.scss",
-              "node_modules/primeicons/primeicons.css",
+              "../node_modules/primeicons/primeicons.css",
               "src/styles.scss"
             ],
             "scripts": [],
