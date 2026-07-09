@@ -2,8 +2,8 @@
   "name": "@czprz/broker",
   "version": "1.0.0",
   "peerDependencies": {
-    "@angular/common": "^21.2.6",
-    "@angular/core": "^21.2.6"
+    "@angular/common": "^22.0.6",
+    "@angular/core": "^22.0.6"
   },
   "dependencies": {
     "tslib": "^2.6.2"

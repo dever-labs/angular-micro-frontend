@@ -32,9 +32,9 @@
   },
   "overrides": {
     "node-forge": "^1.4.0",
-    "esbuild": ">=0.28.1",
-    "http-proxy-middleware": ">=3.0.7",
-    "@babel/core": ">=7.29.6"
+    "esbuild": "0.28.1",
+    "http-proxy-middleware": "3.0.7",
+    "@babel/core": "7.29.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.19",
