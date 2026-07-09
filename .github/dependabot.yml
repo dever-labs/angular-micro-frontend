@@ -9,33 +9,73 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
+      tooling:
+        patterns: ["typescript", "karma*", "jasmine*"]
 
   - package-ecosystem: "npm"
     directory: "/angular-shell"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
+      tooling:
+        patterns: ["typescript", "karma*", "jasmine*"]
 
   - package-ecosystem: "npm"
     directory: "/angular-toolbar"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
+      tooling:
+        patterns: ["typescript", "karma*", "jasmine*"]
 
   - package-ecosystem: "npm"
     directory: "/angular-libs"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
+      tooling:
+        patterns: ["typescript", "karma*", "jasmine*"]
 
   - package-ecosystem: "npm"
     directory: "/angular-libs/projects/broker"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
 
   - package-ecosystem: "npm"
     directory: "/angular-menu"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
+      tooling:
+        patterns: ["typescript", "karma*", "jasmine*"]
 
   - package-ecosystem: "npm"
     directory: "/angular-overview"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 20
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-architects/*"]
+      tooling:
+        patterns: ["typescript", "karma*", "jasmine*"]
