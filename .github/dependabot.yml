@@ -50,15 +50,6 @@ updates:
         patterns: ["typescript", "karma*", "jasmine*"]
 
   - package-ecosystem: "npm"
-    directory: "/angular-libs/projects/broker"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 20
-    groups:
-      angular:
-        patterns: ["@angular/*", "@angular-architects/*"]
-
-  - package-ecosystem: "npm"
     directory: "/angular-menu"
     schedule:
       interval: "weekly"
