@@ -28,7 +28,7 @@
     "primeng": "^21.1.9",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
-    "zone.js": "~0.15.1"
+    "zone.js": "~0.16.2"
   },
   "overrides": {
     "node-forge": "^1.4.0",
