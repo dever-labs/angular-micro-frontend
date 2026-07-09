@@ -17,7 +17,7 @@
     "@angular/forms": "^21.2.6",
     "@angular/platform-browser": "^21.2.6",
     "@angular/platform-browser-dynamic": "^21.2.6",
-    "@angular/router": "^21.2.6",
+    "@angular/router": "^22.0.6",
     "prettier": "^3.0.3",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
