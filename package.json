@@ -20,9 +20,21 @@
     "dev": "npm run build:libs && npm run start"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "http-proxy-middleware": "^3.0.7",
+    "@babel/core": "^7.29.7"
   },
   "dependencies": {
     "@primeng/themes": "^21.0.4"
+  },
+  "overrides": {
+    "esbuild": "0.28.1",
+    "@angular-devkit/build-angular": {
+      "http-proxy-middleware": "3.0.7",
+      "@babel/core": "7.29.7"
+    },
+    "@angular/build": {
+      "@babel/core": "7.29.7"
+    }
   }
 }
