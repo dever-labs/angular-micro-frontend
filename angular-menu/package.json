@@ -23,7 +23,7 @@
     "@angular/router": "^22.0.6",
     "@softarc/native-federation-node": "^4.0.0",
     "es-module-shims": "^1.5.12",
-    "prettier": "^3.0.3",
+    "prettier": "^3.9.5",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.9",
     "rxjs": "~7.8.1",
