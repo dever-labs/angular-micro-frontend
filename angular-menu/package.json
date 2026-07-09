@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^22.0.6",
     "@angular/router": "^22.0.6",
     "@softarc/native-federation-node": "^4.0.0",
-    "es-module-shims": "^1.5.12",
+    "es-module-shims": "^2.8.2",
     "prettier": "^3.9.5",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.9",
