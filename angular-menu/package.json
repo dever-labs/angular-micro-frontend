@@ -6,7 +6,7 @@
     "start": "ng serve --port 4201",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "postinstall": "node ../scripts/install-native-bindings.js"
+    "postinstall": "node -e \"try{require('../scripts/install-native-bindings.js')}catch(e){}\""
   },
   "private": true,
   "dependencies": {
