@@ -31,7 +31,10 @@
     "zone.js": "~0.15.1"
   },
   "overrides": {
-    "node-forge": "^1.4.0"
+    "node-forge": "^1.4.0",
+    "esbuild": ">=0.28.1",
+    "http-proxy-middleware": ">=3.0.7",
+    "@babel/core": ">=7.29.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.5",
