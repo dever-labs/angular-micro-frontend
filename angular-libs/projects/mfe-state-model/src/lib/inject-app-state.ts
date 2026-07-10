@@ -12,6 +12,7 @@ export const APP_STATE_KEYS: { [K in keyof AppState]: K } = {
   uri: 'uri',
   users: 'users',
   menu: 'menu',
+  searchOpen: 'searchOpen',
 } as const;
 
 /**
@@ -25,6 +26,7 @@ export const APP_INITIAL_STATE: AppState = {
   uri: null,
   users: [],
   menu: [],
+  searchOpen: 0,
 };
 
 /**
@@ -46,7 +48,7 @@ export function injectAppState() {
     uri: mfe.get<AppState['uri']>(APP_STATE_KEYS.uri),
     users: mfe.get<AppState['users']>(APP_STATE_KEYS.users),
     menu: mfe.get<AppState['menu']>(APP_STATE_KEYS.menu),
-    searchOpen: mfe.searchOpen,
-    openSearch: () => mfe.openSearch(),
+    searchOpen: mfe.get<AppState['searchOpen']>(APP_STATE_KEYS.searchOpen),
+    openSearch: () => mfe.get<number>(APP_STATE_KEYS.searchOpen).update(n => n + 1),
   };
 }

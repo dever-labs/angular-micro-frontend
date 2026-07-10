@@ -1,7 +1,6 @@
 import { effect, inject, Injectable, InjectionToken, OnDestroy, signal, WritableSignal } from '@angular/core';
 
 const CHANNEL_NAME = '@dever-labs/ngx-mfe-broker:state';
-const SEARCH_CHANNEL_NAME = '@dever-labs/ngx-mfe-broker:search';
 
 /**
  * Injection token used to supply the initial state shape and default values.
@@ -47,15 +46,8 @@ export class MfeStateService implements OnDestroy {
   private readonly defaults = new Map<string, unknown>();
   private readonly inboundKeys = new Set<string>();
 
-  /** Fires whenever the command palette / search should open. Increment-based to re-trigger. */
-  readonly searchOpen = signal(0);
-
   private readonly channel = typeof BroadcastChannel !== 'undefined'
     ? new BroadcastChannel(CHANNEL_NAME)
-    : null;
-
-  private readonly searchChannel = typeof BroadcastChannel !== 'undefined'
-    ? new BroadcastChannel(SEARCH_CHANNEL_NAME)
     : null;
 
   constructor() {
@@ -85,13 +77,9 @@ export class MfeStateService implements OnDestroy {
       s.set(data.value as never);
       queueMicrotask(() => this.inboundKeys.delete(data.key));
     });
-
-    this.searchChannel?.addEventListener('message', () => {
-      this.searchOpen.update(n => n + 1);
-    });
   }
 
-  /** Get a readonly Signal for the given key. */
+  /** Get a typed Signal for the given key. */
   get<T>(key: string): WritableSignal<T> {
     if (!this.signals.has(key)) {
       const raw = localStorage.getItem(key);
@@ -105,14 +93,7 @@ export class MfeStateService implements OnDestroy {
     this.get<T>(key).set(value);
   }
 
-  /** Request the command palette / search to open across all MFEs and tabs. */
-  openSearch(): void {
-    this.searchOpen.update(n => n + 1);
-    this.searchChannel?.postMessage('open');
-  }
-
   ngOnDestroy(): void {
     this.channel?.close();
-    this.searchChannel?.close();
   }
 }

@@ -17,4 +17,6 @@ export interface AppState extends Record<string, unknown> {
   uri: string | null;
   users: string[];
   menu: MenuItem[];
+  /** Increment-based trigger for opening the command palette / search across MFEs and tabs. */
+  searchOpen: number;
 }
