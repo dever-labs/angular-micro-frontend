@@ -1,5 +1,5 @@
 node_modules/
-.angulardist/
-.angular/
+**/dist/
+**/.angular/
 playwright-report/
 test-results/
