@@ -34,12 +34,17 @@ function writeToStorage<K extends keyof AppState>(key: K, value: AppState[K]): v
   }
 }
 
+function stateEqual<K extends keyof AppState>(key: K, a: AppState[K], b: AppState[K]): boolean {
+  if (key === 'users') return JSON.stringify(a) === JSON.stringify(b);
+  return a === b;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AppStateService implements OnDestroy {
-  readonly theme: WritableSignal<string> = signal(readFromStorage('theme'));
-  readonly token: WritableSignal<string | null> = signal(readFromStorage('token'));
-  readonly uri: WritableSignal<string | null> = signal(readFromStorage('uri'));
-  readonly users: WritableSignal<string[]> = signal(readFromStorage('users'));
+  readonly theme = signal(readFromStorage('theme'));
+  readonly token = signal(readFromStorage('token'));
+  readonly uri   = signal(readFromStorage('uri'));
+  readonly users = signal(readFromStorage('users'));
 
   /** Fires whenever any component wants to open the command palette. */
   readonly searchOpen = signal(0);
@@ -52,26 +57,33 @@ export class AppStateService implements OnDestroy {
     ? new BroadcastChannel(SEARCH_CHANNEL_NAME)
     : null;
 
-  private broadcasting = false;
+  /** Keys currently being updated from a cross-tab message — skip re-broadcast. */
+  private readonly inboundKeys = new Set<keyof AppState>();
 
   constructor() {
-    // Persist each signal to localStorage and broadcast to other tabs
+    // Persist each signal to localStorage and broadcast to other tabs.
+    // Skip broadcast when the update itself came from a cross-tab message.
     for (const key of STORAGE_KEYS) {
       effect(() => {
-        const value = (this[key] as WritableSignal<AppState[typeof key]>)();
+        const value = (this[key] as WritableSignal<AppState[keyof AppState]>)();
         writeToStorage(key, value);
-        if (!this.broadcasting) {
+        if (!this.inboundKeys.has(key)) {
           this.channel?.postMessage({ key, value });
         }
       });
     }
 
-    // Receive cross-tab updates
+    // Receive cross-tab updates. Only call .set() when the value actually
+    // differs (JSON comparison for arrays) to prevent infinite loops caused
+    // by BroadcastChannel always delivering a new object reference.
     this.channel?.addEventListener('message', (event) => {
       const { key, value } = event.data as { key: keyof AppState; value: AppState[keyof AppState] };
-      this.broadcasting = true;
-      (this[key] as WritableSignal<AppState[keyof AppState]>).set(value as never);
-      this.broadcasting = false;
+      const signal = this[key] as WritableSignal<AppState[keyof AppState]>;
+      if (stateEqual(key, signal(), value)) return;
+      this.inboundKeys.add(key);
+      signal.set(value as never);
+      // Use microtask so the effect has time to flush before we clear the guard
+      queueMicrotask(() => this.inboundKeys.delete(key));
     });
 
     // Receive search-open requests from other micro-frontends
