@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { injectMfeState } from '@dever-labs/ngx-mfe-broker';
+import { injectAppState } from '@app/mfe-state-model';
 import { ButtonModule } from 'primeng/button';
 import { PopoverModule } from 'primeng/popover';
 import { MenuModule } from 'primeng/menu';
@@ -13,7 +13,7 @@ import { MenuModule } from 'primeng/menu';
     imports: [ButtonModule, PopoverModule, MenuModule],
 })
 export class ToolbarComponent {
-  private readonly state = injectMfeState();
+  private readonly state = injectAppState();
 
   readonly currentTheme = this.state.theme.asReadonly();
 

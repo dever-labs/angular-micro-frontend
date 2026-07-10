@@ -1,0 +1,14 @@
+{
+  "name": "@app/mfe-state-model",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@dever-labs/ngx-mfe-broker": "file:../../dist/ngx-mfe-broker"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "description": "Shared state contract for this application \u2014 defines AppState shape, typed keys and accessor for @dever-labs/ngx-mfe-broker"
+}

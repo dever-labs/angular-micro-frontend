@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { injectMfeState } from '@dever-labs/ngx-mfe-broker';
+import { injectAppState } from '@app/mfe-state-model';
 
 const LIGHT_COLORS = ['#42A5F5', '#66BB6A', '#FFA726', '#26C6DA', '#7E57C2'];
 const DARK_COLORS  = ['#90CAF9', '#A5D6A7', '#FFCC80', '#80DEEA', '#CE93D8'];
@@ -13,7 +13,7 @@ const DARK_COLORS  = ['#90CAF9', '#A5D6A7', '#FFCC80', '#80DEEA', '#CE93D8'];
     imports: [ChartModule],
 })
 export class WindDirectionsChartComponent {
-  private readonly state = injectMfeState();
+  private readonly state = injectAppState();
   public data: any;
   public chartOptions: any;
 

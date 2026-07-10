@@ -5,7 +5,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { firstValueFrom } from 'rxjs';
-import { MenuItem, MenuRegistryService, MFE_INITIAL_STATE, provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
+import { MenuItem, MenuRegistryService, provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
+import { APP_INITIAL_STATE } from '@app/mfe-state-model';
 import { routes } from './app.routes';
 import { STATIC_ROUTES } from './static-routes.token';
 import { MenuRouterSyncService } from './menu-router-sync.service';
@@ -27,7 +28,7 @@ export const appConfig: ApplicationConfig = {
     }),
     // Shell is the single source of truth for initial state defaults.
     // Remote MFEs just inject MfeStateService — no provideNgxMfeBroker needed there.
-    provideNgxMfeBroker({ initialState: MFE_INITIAL_STATE }),
+    provideNgxMfeBroker({ initialState: APP_INITIAL_STATE }),
     { provide: STATIC_ROUTES, useValue: routes },
     provideAppInitializer(() => void inject(MenuRouterSyncService)),
     provideAppInitializer(async () => {

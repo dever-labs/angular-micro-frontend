@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { injectMfeState } from '@dever-labs/ngx-mfe-broker';
+import { injectAppState } from '@app/mfe-state-model';
 
 const LIGHT_COLORS       = ['#42A5F5', '#66BB6A', '#FFA726'];
 const LIGHT_HOVER_COLORS = ['#64B5F6', '#81C784', '#FFB74D'];
@@ -15,7 +15,7 @@ const DARK_HOVER_COLORS  = ['#BBDEFB', '#C8E6C9', '#FFE0B2'];
     imports: [ChartModule],
 })
 export class WindGuestsComponent {
-  private readonly state = injectMfeState();
+  private readonly state = injectAppState();
   public data: any;
   public chartOptions: any;
 

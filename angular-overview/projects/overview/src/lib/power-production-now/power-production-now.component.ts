@@ -1,6 +1,6 @@
 import { Component, effect } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { injectMfeState } from '@dever-labs/ngx-mfe-broker';
+import { injectAppState } from '@app/mfe-state-model';
 
 const DATASETS_LIGHT = [
   {
@@ -56,7 +56,7 @@ const DATASETS_DARK = [
     imports: [ChartModule],
 })
 export class PowerProductionNowComponent {
-  private readonly state = injectMfeState();
+  private readonly state = injectAppState();
   public data: any;
   public chartOptions: any;
 

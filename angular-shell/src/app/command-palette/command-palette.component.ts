@@ -9,7 +9,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { injectMfeState, MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
+import { MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
+import { injectAppState } from '@app/mfe-state-model';
 
 @Component({
   selector: 'app-command-palette',
@@ -22,7 +23,7 @@ export class CommandPaletteComponent {
 
   private readonly router = inject(Router);
   private readonly menuRegistry = inject(MenuRegistryService);
-  private readonly state = injectMfeState();
+  private readonly state = injectAppState();
 
   readonly visible = signal(false);
   readonly query = signal('');

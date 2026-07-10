@@ -4,7 +4,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "broker": ["dist/broker"]
+      "broker": ["dist/broker"],
+      "mfe-state-model": ["./dist/mfe-state-model"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -27,5 +28,13 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "references": [
+    {
+      "path": "./projects/mfe-state-model/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/mfe-state-model/tsconfig.spec.json"
+    }
+  ]
 }
