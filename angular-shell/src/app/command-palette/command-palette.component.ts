@@ -1,15 +1,15 @@
 import {
   Component,
   computed,
+  effect,
   ElementRef,
   HostListener,
   inject,
   signal,
   ViewChild,
-  AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuRegistryService } from '@czprz/broker';
+import { AppStateService, MenuRegistryService } from '@czprz/broker';
 
 @Component({
   selector: 'app-command-palette',
@@ -22,6 +22,7 @@ export class CommandPaletteComponent {
 
   private readonly router = inject(Router);
   private readonly menuRegistry = inject(MenuRegistryService);
+  private readonly appState = inject(AppStateService);
 
   readonly visible = signal(false);
   readonly query = signal('');
@@ -32,6 +33,16 @@ export class CommandPaletteComponent {
     const items = this.menuRegistry.items();
     return q ? items.filter(i => i.label.toLowerCase().includes(q)) : items;
   });
+
+  constructor() {
+    // Open when any MFE (e.g. the menu sidebar) calls appState.openSearch()
+    effect(() => {
+      const _ = this.appState.searchOpen(); // track signal
+      if (this.appState.searchOpen() > 0) {
+        this.open();
+      }
+    }, { allowSignalWrites: true });
+  }
 
   @HostListener('window:keydown', ['$event'])
   onKeydown(event: KeyboardEvent): void {
@@ -69,7 +80,6 @@ export class CommandPaletteComponent {
     this.query.set('');
     this.activeIndex.set(0);
     this.visible.set(true);
-    // Focus after render
     setTimeout(() => this.searchInput?.nativeElement.focus(), 0);
   }
 

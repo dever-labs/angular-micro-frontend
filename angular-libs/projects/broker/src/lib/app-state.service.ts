@@ -8,6 +8,7 @@ export interface AppState {
 }
 
 const CHANNEL_NAME = '@czprz/broker:state';
+const SEARCH_CHANNEL_NAME = '@czprz/broker:search';
 const STORAGE_KEYS: (keyof AppState)[] = ['theme', 'token', 'uri', 'users'];
 
 function readFromStorage<K extends keyof AppState>(key: K): AppState[K] {
@@ -40,8 +41,15 @@ export class AppStateService implements OnDestroy {
   readonly uri: WritableSignal<string | null> = signal(readFromStorage('uri'));
   readonly users: WritableSignal<string[]> = signal(readFromStorage('users'));
 
+  /** Fires whenever any component wants to open the command palette. */
+  readonly searchOpen = signal(0);
+
   private readonly channel = typeof BroadcastChannel !== 'undefined'
     ? new BroadcastChannel(CHANNEL_NAME)
+    : null;
+
+  private readonly searchChannel = typeof BroadcastChannel !== 'undefined'
+    ? new BroadcastChannel(SEARCH_CHANNEL_NAME)
     : null;
 
   private broadcasting = false;
@@ -65,9 +73,21 @@ export class AppStateService implements OnDestroy {
       (this[key] as WritableSignal<AppState[keyof AppState]>).set(value as never);
       this.broadcasting = false;
     });
+
+    // Receive search-open requests from other micro-frontends
+    this.searchChannel?.addEventListener('message', () => {
+      this.searchOpen.update(n => n + 1);
+    });
+  }
+
+  /** Request the command palette to open (works across MFE boundaries). */
+  openSearch(): void {
+    this.searchOpen.update(n => n + 1);
+    this.searchChannel?.postMessage('open');
   }
 
   ngOnDestroy(): void {
     this.channel?.close();
+    this.searchChannel?.close();
   }
 }

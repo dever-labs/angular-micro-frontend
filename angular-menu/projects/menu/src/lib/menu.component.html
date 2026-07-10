@@ -1,7 +1,7 @@
 <button class="logo" [routerLink]="['/']"></button>
 
-<div class="search-hint">
-  Press <kbd>S</kbd> to search
+<div class="search-hint" role="button" tabindex="0" (click)="appState.openSearch()" (keydown.enter)="appState.openSearch()">
+  <i class="pi pi-search"></i> Search <kbd>S</kbd>
 </div>
 
 @for (group of groups(); track group.label) {
