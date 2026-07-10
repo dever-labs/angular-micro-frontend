@@ -17,12 +17,16 @@
     "start:menu": "npm run start --workspace=angular-menu",
     "start:toolbar": "npm run start --workspace=angular-toolbar",
     "start:overview": "npm run start --workspace=angular-overview",
-    "dev": "npm run build:libs && npm run start"
+    "dev": "npm run build:libs && npm run start",
+    "test:e2e": "npx playwright test --config=e2e/playwright.config.ts",
+    "test:e2e:ui": "npx playwright test --config=e2e/playwright.config.ts --ui",
+    "test:e2e:report": "npx playwright show-report"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@playwright/test": "^1.61.1",
     "concurrently": "^9.1.2",
-    "http-proxy-middleware": "^3.0.7",
-    "@babel/core": "^7.29.7"
+    "http-proxy-middleware": "^3.0.7"
   },
   "dependencies": {
     "@primeng/themes": "^21.0.4"
