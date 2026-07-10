@@ -87,7 +87,7 @@
         text-align: left;
         display: block;
 
-        .p-button-icon {
+        ::ng-deep .p-button-icon {
           margin-right: 0.5rem;
         }
       }
