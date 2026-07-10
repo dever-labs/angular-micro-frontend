@@ -12,7 +12,7 @@ module.exports = withNativeFederation({
       strictVersion: true,
       requiredVersion: "auto",
     }),
-    "@czprz/broker": {
+    "@dever-labs/ngx-mfe-broker": {
       singleton: true,
       strictVersion: true,
       requiredVersion: "auto",

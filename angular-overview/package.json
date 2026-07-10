@@ -28,7 +28,7 @@
     "primeng": "^21.1.9",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
-    "@dever-labs/ngx-mfe-broker": "file:../angular-libs/dist/ngx-mfe-broker",
+    "@dever-labs/ngx-mfe-broker": "^0.1.1",
     "@app/mfe-state-model": "file:../angular-libs/dist/mfe-state-model"
   },
   "overrides": {

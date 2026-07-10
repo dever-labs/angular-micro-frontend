@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^22.0.0",
     "@angular/core": "^22.0.0",
-    "@dever-labs/ngx-mfe-broker": "file:../../dist/ngx-mfe-broker"
+    "@dever-labs/ngx-mfe-broker": "^0.1.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"

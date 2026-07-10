@@ -83,7 +83,7 @@ Shell (host)
 | `angular-reports` | Remote — reports page | 4204 |
 | `angular-analytics` | Remote — analytics page | 4205 |
 | `angular-export` | Remote — export page | 4206 |
-| `angular-libs` | Shared library — `@czprz/broker` (state, menu registry) | — |
+| `angular-libs` | Shared library — `@app/mfe-state-model` (typed state contract) | — |
 
 ---
 
@@ -114,12 +114,10 @@ angular-micro-frontend/
 ├── angular-export/          # Export remote
 │
 ├── angular-libs/            # Shared library workspace
-│   └── projects/broker/src/lib/
-│       ├── app-state.service.ts     # theme, token, users signals + BroadcastChannel
-│       ├── menu/
-│       │   ├── menu-item.model.ts   # MenuItem interface
-│       │   └── menu-registry.service.ts  # load(), register(), unregister()
-│       └── public-api.ts
+│   └── projects/mfe-state-model/src/lib/
+│       ├── app-state.model.ts       # AppState interface — typed keys for @dever-labs/ngx-mfe-broker
+│       ├── app-state.keys.ts        # Typed signal keys
+│       └── inject-app-state.ts      # inject() helper that returns typed AppStateService
 │
 ├── package.json             # Root workspace + start/clean scripts
 └── e2e/                     # Playwright E2E tests
@@ -134,7 +132,7 @@ angular-micro-frontend/
 Native Federation works at the ESM level — it uses browser-native `import()` instead of Webpack's custom module system. This means:
 - No Webpack required in remotes; Angular CLI's default Vite/esbuild pipeline works unchanged.
 - Remotes can be served from any static file host (CDN, nginx, S3).
-- Shared singletons (Angular core, `@czprz/broker`, PrimeNG) are deduplicated at runtime via importmaps.
+- Shared singletons (Angular core, `@dever-labs/ngx-mfe-broker`, PrimeNG) are deduplicated at runtime via importmaps.
 
 The trade-off is a native federation cache in `node_modules/.cache/native-federation/` that is keyed by package version (not content). Any time a shared package is rebuilt, this cache must be cleared — the `prestart` npm hook handles this automatically.
 
@@ -151,7 +149,7 @@ This means change detection only runs when signals change or events fire explici
 
 ### Signal-based shared state (broker)
 
-`@czprz/broker` is a shared Angular library that NF loads as a singleton. It exposes:
+`@dever-labs/ngx-mfe-broker` is a shared Angular library published to npm that NF loads as a singleton. It exposes:
 
 - **`AppStateService`** — `theme`, `token`, `uri`, `users` as writable signals. Each signal is persisted to `localStorage` and broadcast to other tabs via `BroadcastChannel`. Incoming cross-tab updates are guarded with `Set<keyof AppState>` + `queueMicrotask()` to prevent feedback loops when signals hold reference types (arrays).
 
@@ -217,7 +215,7 @@ Any custom overlay or panel you add should use `--p-card-background` rather than
 # 1. Install all workspaces
 npm install
 
-# 2. Build the shared broker library
+# 2. Build the shared state-model library
 npm run build:libs
 
 # 3. Start all 7 apps (auto-clears NF cache first)
@@ -237,12 +235,14 @@ npm run start:toolbar   # :4202
 # ... start:overview, start:reports, start:analytics, start:export
 ```
 
-After changing `@czprz/broker`, rebuild it before restarting:
+After changing `@app/mfe-state-model`, rebuild it before restarting:
 
 ```bash
 npm run build:libs
 npm run start   # prestart clears NF cache automatically
 ```
+
+> `@dever-labs/ngx-mfe-broker` is consumed directly from npm — no local build step needed. If you upgrade its version, run `npm run clean:nf` to evict the stale NF bundle cache before restarting.
 
 ---
 

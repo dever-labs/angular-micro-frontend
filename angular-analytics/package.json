@@ -10,7 +10,7 @@
   "private": true,
   "dependencies": {
     "@angular-architects/native-federation": "^22.0.4",
-    "@dever-labs/ngx-mfe-broker": "file:../angular-libs/dist/ngx-mfe-broker",
+    "@dever-labs/ngx-mfe-broker": "^0.1.1",
     "@angular/animations": "^22.0.6",
     "@angular/common": "^22.0.6",
     "@angular/compiler": "^22.0.6",
