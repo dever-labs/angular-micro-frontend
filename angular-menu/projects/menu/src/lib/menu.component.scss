@@ -24,10 +24,15 @@
   }
 
   .search {
-    padding: 1rem 2rem 2rem;
+    padding: 0.5rem 1rem 1.25rem;
 
-    input {
-      width: 180px;
+    p-iconfield {
+      display: block;
+      width: 100%;
+
+      input {
+        width: 100%;
+      }
     }
   }
 

@@ -1,10 +1,10 @@
 <button class="logo" [routerLink]="['/']"></button>
 
 <div class="search">
-  <span class="p-input-icon-left">
-    <i class="pi pi-search"></i>
-    <input type="text" pInputText placeholder="Search" />
-  </span>
+  <p-iconfield>
+    <p-inputicon styleClass="pi pi-search" />
+    <input pInputText type="text" placeholder="Search..." />
+  </p-iconfield>
 </div>
 
 @for (group of groups(); track group.label) {
