@@ -133,6 +133,29 @@
           }
         }
       }
+    },
+    "ngx-mfe-broker": {
+      "projectType": "library",
+      "root": "projects/ngx-mfe-broker",
+      "sourceRoot": "projects/ngx-mfe-broker/src",
+      "prefix": "mfe",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/ngx-mfe-broker/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-mfe-broker/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-mfe-broker/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   },
   "schematics": {

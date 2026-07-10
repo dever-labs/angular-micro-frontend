@@ -1,7 +1,7 @@
 import { Component, computed, inject } from "@angular/core";
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { AppStateService, MenuRegistryService } from '@czprz/broker';
+import { MfeStateService, MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
 
 @Component({
     selector: "lib-menu",
@@ -12,7 +12,9 @@ import { AppStateService, MenuRegistryService } from '@czprz/broker';
 })
 export class MenuComponent {
   private readonly menuRegistry = inject(MenuRegistryService);
-  readonly appState = inject(AppStateService);
+  private readonly mfeState = inject(MfeStateService);
+
+  readonly theme = this.mfeState.get<string>('theme');
 
   readonly groups = computed(() => {
     const groupMap = new Map<string, { label: string; path: string; icon?: string }[]>();

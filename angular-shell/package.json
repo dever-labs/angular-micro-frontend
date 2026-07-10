@@ -20,7 +20,7 @@
     "@angular/platform-browser": "^22.0.6",
     "@angular/platform-browser-dynamic": "^22.0.6",
     "@angular/router": "^22.0.6",
-    "@czprz/broker": "file:../angular-libs/dist/broker",
+    "@dever-labs/ngx-mfe-broker": "file:../angular-libs/dist/ngx-mfe-broker",
     "chart.js": "^4.4.0",
     "es-module-shims": "^2.8.2",
     "oxc-parser": "^0.8.0",

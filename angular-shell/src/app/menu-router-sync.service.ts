@@ -1,7 +1,7 @@
 import { effect, inject, Injectable } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { loadRemoteModule } from '@angular-architects/native-federation';
-import { MenuItem, MenuRegistryService } from '@czprz/broker';
+import { MenuItem, MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
 import { STATIC_ROUTES } from './static-routes.token';
 
 @Injectable({ providedIn: 'root' })

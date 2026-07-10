@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { AppStateService } from '@czprz/broker';
+import { MfeStateService } from '@dever-labs/ngx-mfe-broker';
 
 const DATASETS_LIGHT = [
   {
@@ -56,7 +56,7 @@ const DATASETS_DARK = [
     imports: [ChartModule],
 })
 export class PowerProductionNowComponent {
-  private readonly appState = inject(AppStateService);
+  private readonly mfeState = inject(MfeStateService);
   public data: any;
   public chartOptions: any;
 
@@ -64,7 +64,7 @@ export class PowerProductionNowComponent {
 
   constructor() {
     effect(() => {
-      const dark = this.appState.theme().includes('dark');
+      const dark = this.mfeState.get<string>('theme')().includes('dark');
 
       this.data = {
         labels: this.LABELS,

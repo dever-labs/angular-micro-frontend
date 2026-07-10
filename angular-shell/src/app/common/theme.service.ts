@@ -1,32 +1,21 @@
 import { effect, inject, Injectable, DOCUMENT } from "@angular/core";
-import { AppStateService } from "@czprz/broker";
-import { ConfigFacadeService } from "./config/config-facade.service";
-
+import { MfeStateService } from "@dever-labs/ngx-mfe-broker";
 
 @Injectable({
   providedIn: "root",
 })
 export class ThemeService {
   private readonly document = inject(DOCUMENT);
+  private readonly mfeState = inject(MfeStateService);
 
   get theme(): string {
-    return this.appState.theme();
+    return this.mfeState.get<string>('theme')();
   }
 
-  constructor(
-    private readonly appState: AppStateService,
-    private readonly configFacade: ConfigFacadeService,
-  ) {
+  constructor() {
     effect(() => {
-      this.applyTheme(this.appState.theme());
+      this.applyTheme(this.mfeState.get<string>('theme')());
     });
-  }
-
-  public start(): void {
-    const persisted = this.configFacade.getTheme();
-    if (persisted) {
-      this.appState.theme.set(persisted);
-    }
   }
 
   private applyTheme(theme: string): void {
@@ -38,4 +27,3 @@ export class ThemeService {
     }
   }
 }
-

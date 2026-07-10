@@ -5,7 +5,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { firstValueFrom } from 'rxjs';
-import { MenuItem, MenuRegistryService } from '@czprz/broker';
+import { MenuItem, MenuRegistryService, provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
 import { routes } from './app.routes';
 import { STATIC_ROUTES } from './static-routes.token';
 import { MenuRouterSyncService } from './menu-router-sync.service';
@@ -23,6 +23,14 @@ export const appConfig: ApplicationConfig = {
         options: {
           darkModeSelector: '.dark-theme',
         },
+      },
+    }),
+    provideNgxMfeBroker({
+      initialState: {
+        theme: 'light-theme',
+        token: null,
+        uri: null,
+        users: [],
       },
     }),
     // Provide static routes so MenuRouterSyncService can append them after dynamic ones.

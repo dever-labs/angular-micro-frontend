@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppStateService, MenuRegistryService } from '@czprz/broker';
+import { MfeStateService, MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
 
 @Component({
   selector: 'app-command-palette',
@@ -22,7 +22,7 @@ export class CommandPaletteComponent {
 
   private readonly router = inject(Router);
   private readonly menuRegistry = inject(MenuRegistryService);
-  private readonly appState = inject(AppStateService);
+  private readonly mfeState = inject(MfeStateService);
 
   readonly visible = signal(false);
   readonly query = signal('');
@@ -42,8 +42,8 @@ export class CommandPaletteComponent {
   constructor() {
     // Open when any MFE (e.g. the menu sidebar) calls appState.openSearch()
     effect(() => {
-      const _ = this.appState.searchOpen(); // track signal
-      if (this.appState.searchOpen() > 0) {
+      const _ = this.mfeState.searchOpen(); // track signal
+      if (this.mfeState.searchOpen() > 0) {
         this.open();
       }
     }, { allowSignalWrites: true });

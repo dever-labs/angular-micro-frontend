@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^22.0.6",
     "@angular/platform-browser-dynamic": "^22.0.6",
     "@angular/router": "^22.0.6",
-    "@czprz/broker": "file:../angular-libs/dist/broker",
+    "@dever-labs/ngx-mfe-broker": "file:../angular-libs/dist/ngx-mfe-broker",
     "prettier": "^3.0.3",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.4",

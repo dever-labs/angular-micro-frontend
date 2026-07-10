@@ -1,0 +1,30 @@
+{
+  "name": "@dever-labs/ngx-mfe-broker",
+  "version": "0.1.0",
+  "description": "Angular Signals + BroadcastChannel state broker for micro-frontends",
+  "keywords": [
+    "angular",
+    "micro-frontends",
+    "mfe",
+    "signals",
+    "broadcast-channel",
+    "state-management",
+    "native-federation",
+    "cross-tab"
+  ],
+  "author": "Dever Labs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dever-labs/ngx-mfe-broker.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
+

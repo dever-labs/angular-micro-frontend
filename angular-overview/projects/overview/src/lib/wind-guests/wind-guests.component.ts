@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { AppStateService } from '@czprz/broker';
+import { MfeStateService } from '@dever-labs/ngx-mfe-broker';
 
 const LIGHT_COLORS       = ['#42A5F5', '#66BB6A', '#FFA726'];
 const LIGHT_HOVER_COLORS = ['#64B5F6', '#81C784', '#FFB74D'];
@@ -15,13 +15,13 @@ const DARK_HOVER_COLORS  = ['#BBDEFB', '#C8E6C9', '#FFE0B2'];
     imports: [ChartModule],
 })
 export class WindGuestsComponent {
-  private readonly appState = inject(AppStateService);
+  private readonly mfeState = inject(MfeStateService);
   public data: any;
   public chartOptions: any;
 
   constructor() {
     effect(() => {
-      const dark = this.appState.theme().includes('dark');
+      const dark = this.mfeState.get<string>('theme')().includes('dark');
 
       this.data = {
         labels: ['A', 'B', 'C'],

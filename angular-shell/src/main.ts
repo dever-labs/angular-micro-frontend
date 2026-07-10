@@ -1,5 +1,5 @@
 import { initFederation } from '@angular-architects/native-federation';
-import type { MenuItem } from '@czprz/broker';
+import type { MenuItem } from '@dever-labs/ngx-mfe-broker';
 import { environment } from './environments/environment';
 
 async function bootstrap(): Promise<void> {

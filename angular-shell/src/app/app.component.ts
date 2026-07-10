@@ -16,16 +16,16 @@ import { CommandPaletteComponent } from "./command-palette/command-palette.compo
 export class AppComponent implements OnInit {
   private readonly document = inject(DOCUMENT);
 
+  // Inject ThemeService to eagerly start its effect.
+  private readonly _theme = inject(ThemeService);
+
   @HostListener('window:scroll')
   onScroll() {
     // @ts-ignore
     document.documentElement.dataset['scroll'] = window.scrollY;
   }
 
-  constructor(private readonly theme: ThemeService) {}
-
   ngOnInit(): void {
-    this.theme.start();
     this.onScroll();
   }
 }

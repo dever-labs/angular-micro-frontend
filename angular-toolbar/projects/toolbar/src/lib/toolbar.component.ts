@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { AppStateService } from '@czprz/broker';
+import { MfeStateService } from '@dever-labs/ngx-mfe-broker';
 import { ButtonModule } from 'primeng/button';
 import { PopoverModule } from 'primeng/popover';
 import { MenuModule } from 'primeng/menu';
@@ -13,9 +13,9 @@ import { MenuModule } from 'primeng/menu';
     imports: [ButtonModule, PopoverModule, MenuModule],
 })
 export class ToolbarComponent {
-  private readonly appState = inject(AppStateService);
+  private readonly mfeState = inject(MfeStateService);
 
-  readonly currentTheme = this.appState.theme.asReadonly();
+  readonly currentTheme = this.mfeState.get<string>('theme').asReadonly();
 
   public userMenuItems: MenuItem[] = [
     { label: 'Profile', icon: 'pi pi-user' },
@@ -24,6 +24,6 @@ export class ToolbarComponent {
   ];
 
   public changeTheme(theme: string): void {
-    this.appState.theme.set(theme);
+    this.mfeState.set('theme', theme);
   }
 }
