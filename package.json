@@ -18,6 +18,8 @@
     "start:toolbar": "npm run start --workspace=angular-toolbar",
     "start:overview": "npm run start --workspace=angular-overview",
     "dev": "npm run build:libs && npm run start",
+    "clean:nf": "rm -rf angular-shell/node_modules/.cache/native-federation angular-menu/node_modules/.cache/native-federation angular-toolbar/node_modules/.cache/native-federation angular-overview/node_modules/.cache/native-federation angular-shell/dist angular-menu/dist angular-toolbar/dist angular-overview/dist",
+    "dev:clean": "npm run build:libs && npm run clean:nf && npm run start",
     "test:e2e": "npx playwright test --config=e2e/playwright.config.ts",
     "test:e2e:ui": "npx playwright test --config=e2e/playwright.config.ts --ui",
     "test:e2e:report": "npx playwright show-report"
