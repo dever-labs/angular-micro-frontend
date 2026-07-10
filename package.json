@@ -14,7 +14,7 @@
   "scripts": {
     "postinstall": "node scripts/install-native-bindings.js",
     "install:all": "npm install --legacy-peer-deps && npm run --workspaces install --if-present",
-    "build:libs": "cd angular-libs && npx ng build broker --configuration production && npx ng build ngx-mfe-broker --configuration production",
+    "build:libs": "cd angular-libs && npx ng build ngx-mfe-broker --configuration production",
     "start": "concurrently -n menu,toolbar,overview,reports,analytics,export,shell -c cyan,blue,magenta,yellow,green,red,white \"npm run start --workspace=angular-menu\" \"npm run start --workspace=angular-toolbar\" \"npm run start --workspace=angular-overview\" \"npm run start --workspace=angular-reports\" \"npm run start --workspace=angular-analytics\" \"npm run start --workspace=angular-export\" \"npm run start --workspace=angular-shell\"",
     "start:shell": "npm run start --workspace=angular-shell",
     "start:menu": "npm run start --workspace=angular-menu",

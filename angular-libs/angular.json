@@ -103,37 +103,6 @@
         }
       }
     },
-    "broker": {
-      "projectType": "library",
-      "root": "projects/broker",
-      "sourceRoot": "projects/broker/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/broker/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/broker/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/broker/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/broker/src/test.ts",
-            "tsConfig": "projects/broker/tsconfig.spec.json",
-            "karmaConfig": "projects/broker/karma.conf.js"
-          }
-        }
-      }
-    },
     "ngx-mfe-broker": {
       "projectType": "library",
       "root": "projects/ngx-mfe-broker",
