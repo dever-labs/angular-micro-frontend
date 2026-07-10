@@ -1,15 +1,8 @@
 import { Routes } from '@angular/router';
-import { loadRemoteModule } from '@angular-architects/native-federation';
 import { WelcomeComponent } from './welcome/welcome.component';
 
+/** Static fallback routes. Feature routes are registered dynamically
+ *  at startup via the menu API — see provideAppInitializer in app.config.ts. */
 export const routes: Routes = [
-  {
-    path: 'dashboard',
-    loadChildren: () =>
-      loadRemoteModule('overview', './routes').then(m => m.APP_ROUTES),
-  },
-  {
-    path: '**',
-    component: WelcomeComponent,
-  },
+  { path: '**', component: WelcomeComponent },
 ];

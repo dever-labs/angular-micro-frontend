@@ -7,12 +7,20 @@
   </span>
 </div>
 
-<div class="menu">
-  <div class="category">Overview</div>
-  <div class="items">
-    <button pButton [routerLink]="['/dashboard']" type="button" label="Dashboard" class="p-button-text"></button>
-    <button pButton [routerLink]="['/reports']" type="button" label="Reports" class="p-button-text"></button>
-    <button pButton [routerLink]="['/analytics']" type="button" label="Analytics" class="p-button-text"></button>
-    <button pButton [routerLink]="['/export']" type="button" label="Export" class="p-button-text"></button>
+@for (group of groups(); track group.label) {
+  <div class="menu">
+    <div class="category">{{ group.label }}</div>
+    <div class="items">
+      @for (item of group.items; track item.path) {
+        <button
+          pButton
+          [routerLink]="['/' + item.path]"
+          type="button"
+          [label]="item.label"
+          [icon]="item.icon ?? ''"
+          class="p-button-text"
+        ></button>
+      }
+    </div>
   </div>
-</div>
+}

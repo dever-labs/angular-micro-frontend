@@ -7,3 +7,5 @@ export * from './lib/config/config-repository.service';
 export * from './lib/config/config-facade.service';
 export * from './lib/broker.service';
 export * from './lib/broker.module';
+export * from './lib/menu/menu-item.model';
+export * from './lib/menu/menu-registry.service';
