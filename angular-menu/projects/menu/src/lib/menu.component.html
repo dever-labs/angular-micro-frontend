@@ -1,10 +1,7 @@
 <button class="logo" [routerLink]="['/']"></button>
 
-<div class="search">
-  <p-iconfield>
-    <p-inputicon styleClass="pi pi-search" />
-    <input pInputText type="text" placeholder="Search..." />
-  </p-iconfield>
+<div class="search-hint">
+  Press <kbd>S</kbd> to search
 </div>
 
 @for (group of groups(); track group.label) {

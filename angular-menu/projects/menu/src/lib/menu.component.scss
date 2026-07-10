@@ -23,16 +23,26 @@
     cursor: pointer;
   }
 
-  .search {
-    padding: 0.5rem 1rem 1.25rem;
+  .search-hint {
+    margin: 0 1rem 1.25rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--p-content-border-color);
+    border-radius: var(--p-border-radius-md);
+    font-size: 0.8rem;
+    color: var(--p-text-muted-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 
-    p-iconfield {
-      display: block;
-      width: 100%;
-
-      input {
-        width: 100%;
-      }
+    kbd {
+      border: 1px solid var(--p-content-border-color);
+      border-radius: 3px;
+      padding: 0 5px;
+      font-size: 0.75rem;
+      background: var(--p-surface-100);
+      color: var(--p-text-color);
+      line-height: 1.6;
     }
   }
 

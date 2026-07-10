@@ -1,0 +1,53 @@
+@if (visible()) {
+  <div class="palette-backdrop" (click)="close()"></div>
+
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Quick search">
+    <div class="palette-header">
+      <i class="pi pi-search palette-icon"></i>
+      <input
+        #searchInput
+        class="palette-input"
+        type="text"
+        placeholder="Search pages…"
+        autocomplete="off"
+        [value]="query()"
+        (input)="onQuery($any($event.target).value)"
+      />
+      <kbd class="palette-hint">ESC</kbd>
+    </div>
+
+    @if (filtered().length > 0) {
+      <ul class="palette-results" role="listbox">
+        @for (item of filtered(); track item.path; let i = $index) {
+          <li
+            class="palette-item"
+            [class.active]="i === activeIndex()"
+            role="option"
+            [attr.aria-selected]="i === activeIndex()"
+            (click)="navigate(item.path)"
+            (mouseenter)="activeIndex.set(i)"
+          >
+            @if (item.icon) {
+              <i [class]="'palette-item-icon ' + item.icon"></i>
+            } @else {
+              <i class="palette-item-icon pi pi-file"></i>
+            }
+            <span class="palette-item-label">{{ item.label }}</span>
+            @if (item.group) {
+              <span class="palette-item-group">{{ item.group }}</span>
+            }
+            <i class="palette-item-enter pi pi-arrow-right"></i>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="palette-empty">No results for "<strong>{{ query() }}</strong>"</div>
+    }
+
+    <div class="palette-footer">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>ESC</kbd> close</span>
+    </div>
+  </div>
+}

@@ -1,8 +1,5 @@
 import { Component, computed, inject } from "@angular/core";
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
 import { RouterLink } from '@angular/router';
 import { MenuRegistryService } from '@czprz/broker';
 
@@ -11,7 +8,7 @@ import { MenuRegistryService } from '@czprz/broker';
     templateUrl: "./menu.component.html",
     styleUrls: ["./menu.component.scss"],
     standalone: true,
-    imports: [RouterLink, ButtonModule, InputTextModule, IconFieldModule, InputIconModule],
+    imports: [RouterLink, ButtonModule],
 })
 export class MenuComponent {
   private readonly menuRegistry = inject(MenuRegistryService);
