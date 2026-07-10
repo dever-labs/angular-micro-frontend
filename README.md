@@ -99,7 +99,7 @@ angular-micro-frontend/
 │   │   ├── menu/                    # Shell wrapper that loads menu remote
 │   │   └── toolbar/                 # Shell wrapper that loads toolbar remote
 │   ├── src/assets/
-│   │   ├── mock-menu.json           # Dev mock for /api/menu (with remoteEntry URLs)
+│   │   ├── mock-menu.json           # Dev mock for /api/menu (with remoteEntry paths)
 │   │   └── themes/                  # light.scss / dark-purple.scss
 │   ├── src/environments/
 │   │   ├── environment.ts           # infrastructureRemotes (menu/toolbar localhost URLs)
@@ -305,13 +305,13 @@ spec:
           port: 80
 ```
 
-The shell builds its Native Federation manifest dynamically from the menu API response — each `MenuItem` carries a `remoteEntry` URL that the operator writes in from the CRD spec:
+The shell builds its Native Federation manifest dynamically from the menu API response — each `MenuItem` carries a `remoteEntry` path that the operator writes in from the CRD spec:
 
 ```json
 GET /api/menu
 [
-  { "remote": "overview", "remoteEntry": "https://my-cluster.example.com/remotes/overview/remoteEntry.json", ... },
-  { "remote": "reports",  "remoteEntry": "https://my-cluster.example.com/remotes/reports/remoteEntry.json",  ... }
+  { "remote": "overview", "remoteEntry": "/remotes/overview/remoteEntry.json", ... },
+  { "remote": "reports",  "remoteEntry": "/remotes/reports/remoteEntry.json",  ... }
 ]
 ```
 
@@ -778,7 +778,7 @@ interface MenuItem {
   icon?: string;          // "pi pi-home"
   group?: string;         // "Overview"
   remote: string;         // "overview"  — NF remote key
-  remoteEntry: string;    // "https://gateway/remotes/overview/remoteEntry.json"
+  remoteEntry: string;    // "/remotes/overview/remoteEntry.json"
   exposedModule: string;  // "./routes"
   routesExport?: string;  // "APP_ROUTES" (default)
 }

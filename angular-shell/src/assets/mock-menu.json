@@ -5,7 +5,7 @@
     "icon": "pi pi-home",
     "group": "Overview",
     "remote": "overview",
-    "remoteEntry": "http://localhost:4203/remoteEntry.json",
+    "remoteEntry": "/remotes/overview/remoteEntry.json",
     "exposedModule": "./routes"
   },
   {
@@ -14,7 +14,7 @@
     "icon": "pi pi-file-pdf",
     "group": "Overview",
     "remote": "reports",
-    "remoteEntry": "http://localhost:4204/remoteEntry.json",
+    "remoteEntry": "/remotes/reports/remoteEntry.json",
     "exposedModule": "./routes"
   },
   {
@@ -23,7 +23,7 @@
     "icon": "pi pi-chart-bar",
     "group": "Overview",
     "remote": "analytics",
-    "remoteEntry": "http://localhost:4205/remoteEntry.json",
+    "remoteEntry": "/remotes/analytics/remoteEntry.json",
     "exposedModule": "./routes"
   },
   {
@@ -32,7 +32,7 @@
     "icon": "pi pi-download",
     "group": "Overview",
     "remote": "export",
-    "remoteEntry": "http://localhost:4206/remoteEntry.json",
+    "remoteEntry": "/remotes/export/remoteEntry.json",
     "exposedModule": "./routes"
   }
 ]

@@ -9,7 +9,7 @@ export interface MenuItem {
   group?: string;
   /** Name of the Native Federation remote (unique key, e.g. "overview") */
   remote: string;
-  /** URL to the remote's remoteEntry.json — set by the menu service from the CRD spec */
+  /** Path to the remote's remoteEntry.json — set by the menu service from the CRD spec (e.g. "/remotes/overview/remoteEntry.json") */
   remoteEntry: string;
   /** Exposed module path on the remote (e.g. "./routes") */
   exposedModule: string;
