@@ -1,6 +1,52 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { AppStateService } from '@czprz/broker';
+
+const DATASETS_LIGHT = [
+  {
+    label: 'My First dataset',
+    backgroundColor: 'rgba(179,181,198,0.2)',
+    borderColor: 'rgba(179,181,198,1)',
+    pointBackgroundColor: 'rgba(179,181,198,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(179,181,198,1)',
+    data: [65, 59, 90, 81, 56, 55, 40],
+  },
+  {
+    label: 'My Second dataset',
+    backgroundColor: 'rgba(255,99,132,0.2)',
+    borderColor: 'rgba(255,99,132,1)',
+    pointBackgroundColor: 'rgba(255,99,132,1)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(255,99,132,1)',
+    data: [28, 48, 40, 19, 96, 27, 100],
+  },
+];
+
+const DATASETS_DARK = [
+  {
+    label: 'My First dataset',
+    backgroundColor: 'rgba(144,202,249,0.2)',
+    borderColor: 'rgba(144,202,249,1)',
+    pointBackgroundColor: 'rgba(144,202,249,1)',
+    pointBorderColor: '#27272a',
+    pointHoverBackgroundColor: '#27272a',
+    pointHoverBorderColor: 'rgba(144,202,249,1)',
+    data: [65, 59, 90, 81, 56, 55, 40],
+  },
+  {
+    label: 'My Second dataset',
+    backgroundColor: 'rgba(255,143,171,0.2)',
+    borderColor: 'rgba(255,143,171,1)',
+    pointBackgroundColor: 'rgba(255,143,171,1)',
+    pointBorderColor: '#27272a',
+    pointHoverBackgroundColor: '#27272a',
+    pointHoverBorderColor: 'rgba(255,143,171,1)',
+    data: [28, 48, 40, 19, 96, 27, 100],
+  },
+];
 
 @Component({
     selector: 'lib-power-production-now',
@@ -9,102 +55,49 @@ import { AppStateService } from '@czprz/broker';
     standalone: true,
     imports: [ChartModule],
 })
-export class PowerProductionNowComponent implements OnInit {
+export class PowerProductionNowComponent {
   private readonly appState = inject(AppStateService);
   public data: any;
   public chartOptions: any;
 
+  private readonly LABELS = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+
   constructor() {
     effect(() => {
-      this.chartOptions = this.appState.theme().includes('dark')
-        ? this.getDarkTheme()
-        : this.getLightTheme();
+      const dark = this.appState.theme().includes('dark');
+
+      this.data = {
+        labels: this.LABELS,
+        datasets: dark ? DATASETS_DARK : DATASETS_LIGHT,
+      };
+
+      this.chartOptions = dark ? this.getDarkTheme() : this.getLightTheme();
     });
   }
 
-  ngOnInit() {
-    this.data = {
-      labels: [
-        'Eating',
-        'Drinking',
-        'Sleeping',
-        'Designing',
-        'Coding',
-        'Cycling',
-        'Running',
-      ],
-      datasets: [
-        {
-          label: 'My First dataset',
-          backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: 'rgba(179,181,198,1)',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: [65, 59, 90, 81, 56, 55, 40],
-        },
-        {
-          label: 'My Second dataset',
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgba(255,99,132,1)',
-          pointBackgroundColor: 'rgba(255,99,132,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(255,99,132,1)',
-          data: [28, 48, 40, 19, 96, 27, 100],
-        },
-      ],
-    };
-  }
-
-  getLightTheme() {
+  private getLightTheme() {
     return {
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            color: '#495057',
-          },
-        },
-      },
+      plugins: { legend: { labels: { color: '#495057' } } },
       scales: {
         r: {
-          pointLabels: {
-            color: '#495057',
-          },
-          grid: {
-            color: '#ebedef',
-          },
-          angleLines: {
-            color: '#ebedef',
-          },
+          pointLabels: { color: '#495057' },
+          grid: { color: '#ebedef' },
+          angleLines: { color: '#ebedef' },
         },
       },
     };
   }
 
-  getDarkTheme() {
+  private getDarkTheme() {
     return {
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            color: '#ebedef',
-          },
-        },
-      },
+      plugins: { legend: { labels: { color: '#ebedef' } } },
       scales: {
         r: {
-          pointLabels: {
-            color: '#ebedef',
-          },
-          grid: {
-            color: 'rgba(255,255,255,0.2)',
-          },
-          angleLines: {
-            color: 'rgba(255,255,255,0.2)',
-          },
+          pointLabels: { color: '#ebedef' },
+          grid: { color: 'rgba(255,255,255,0.2)' },
+          angleLines: { color: 'rgba(255,255,255,0.2)' },
         },
       },
     };
