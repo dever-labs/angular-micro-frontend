@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+import { AppStateService } from '@czprz/broker';
 
 @Component({
     selector: 'lib-power-production-now',
@@ -9,8 +10,17 @@ import { ChartModule } from 'primeng/chart';
     imports: [ChartModule],
 })
 export class PowerProductionNowComponent implements OnInit {
+  private readonly appState = inject(AppStateService);
   public data: any;
   public chartOptions: any;
+
+  constructor() {
+    effect(() => {
+      this.chartOptions = this.appState.theme().includes('dark')
+        ? this.getDarkTheme()
+        : this.getLightTheme();
+    });
+  }
 
   ngOnInit() {
     this.data = {
@@ -46,26 +56,11 @@ export class PowerProductionNowComponent implements OnInit {
         },
       ],
     };
-
-    this.chartOptions = {
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: { color: '#495057' },
-        },
-      },
-      scales: {
-        r: {
-          pointLabels: { color: '#495057' },
-          grid: { color: '#ebedef' },
-          angleLines: { color: '#ebedef' },
-        },
-      },
-    };
   }
 
   getLightTheme() {
     return {
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: {
@@ -91,6 +86,7 @@ export class PowerProductionNowComponent implements OnInit {
 
   getDarkTheme() {
     return {
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: {

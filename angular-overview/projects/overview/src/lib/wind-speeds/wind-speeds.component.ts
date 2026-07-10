@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+import { AppStateService } from '@czprz/broker';
 
 @Component({
     selector: 'lib-wind-speeds',
@@ -9,8 +10,17 @@ import { ChartModule } from 'primeng/chart';
     imports: [ChartModule],
 })
 export class WindSpeedsComponent implements OnInit {
+  private readonly appState = inject(AppStateService);
   public data: any;
   public chartOptions: any;
+
+  constructor() {
+    effect(() => {
+      this.chartOptions = this.appState.theme().includes('dark')
+        ? this.getDarkTheme()
+        : this.getLightTheme();
+    });
+  }
 
   ngOnInit() {
     this.data = {
@@ -23,19 +33,11 @@ export class WindSpeedsComponent implements OnInit {
         },
       ],
     };
-
-    this.chartOptions = {
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: { color: '#495057' },
-        },
-      },
-    };
   }
 
   getLightTheme() {
     return {
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: {
@@ -48,6 +50,7 @@ export class WindSpeedsComponent implements OnInit {
 
   getDarkTheme() {
     return {
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: {
