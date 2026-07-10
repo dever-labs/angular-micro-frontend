@@ -1,8 +1,10 @@
 <button class="logo" [routerLink]="['/']"></button>
 
-<div class="search-hint" role="button" tabindex="0" (click)="appState.openSearch()" (keydown.enter)="appState.openSearch()">
-  <i class="pi pi-search"></i> Search <kbd>S</kbd>
-</div>
+<button class="search-hint" type="button" (click)="appState.openSearch()">
+  <i class="pi pi-search"></i>
+  <span class="search-placeholder">Search…</span>
+  <kbd>S</kbd>
+</button>
 
 @for (group of groups(); track group.label) {
   <div class="menu">

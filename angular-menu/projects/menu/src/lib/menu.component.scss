@@ -24,25 +24,52 @@
   }
 
   .search-hint {
-    margin: 0 1rem 1.25rem;
-    padding: 0.4rem 0.75rem;
-    border: 1px solid var(--p-content-border-color);
-    border-radius: var(--p-border-radius-md);
-    font-size: 0.8rem;
-    color: var(--p-text-muted-color);
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
+    margin: 0 1rem 1.25rem;
+    padding: 0.45rem 0.75rem;
+    width: calc(100% - 2rem);
+    background: transparent;
+    border: 1px solid var(--p-form-field-border-color, var(--p-content-border-color));
+    border-radius: var(--p-form-field-border-radius, var(--p-border-radius-md));
+    color: var(--p-text-muted-color);
+    font-size: 0.875rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    box-sizing: border-box;
+
+    .pi-search {
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .search-placeholder {
+      flex: 1;
+    }
 
     kbd {
       border: 1px solid var(--p-content-border-color);
       border-radius: 3px;
       padding: 0 5px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       background: var(--p-card-background);
-      color: var(--p-text-color);
+      color: var(--p-text-muted-color);
       line-height: 1.6;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      border-color: var(--p-form-field-hover-border-color, var(--p-primary-color));
+      background: var(--p-navigation-item-hover-background);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--p-primary-color);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--p-primary-color) 30%, transparent);
     }
   }
 
