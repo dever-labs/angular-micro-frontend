@@ -64,8 +64,8 @@ Browser
 
 ```
 Shell (host)
-  ├─ Loads federation.manifest.json  →  knows remote entry URLs
-  ├─ Fetches GET /api/menu           →  knows which routes to register
+  ├─ Fetches GET /api/menu           →  builds NF manifest + loads feature remotes dynamically
+  ├─ environment.infrastructureRemotes → always loads menu + toolbar (platform remotes)
   ├─ MenuRouterSyncService           →  effect() watches signal → router.resetConfig()
   └─ Renders layout
        ├─ <app-menu>     → loadRemoteModule('menu',    './Component')
@@ -99,9 +99,11 @@ angular-micro-frontend/
 │   │   ├── menu/                    # Shell wrapper that loads menu remote
 │   │   └── toolbar/                 # Shell wrapper that loads toolbar remote
 │   ├── src/assets/
-│   │   ├── federation.manifest.json # Remote entry URLs
-│   │   ├── mock-menu.json           # Dev mock for /api/menu
+│   │   ├── mock-menu.json           # Dev mock for /api/menu (with remoteEntry URLs)
 │   │   └── themes/                  # light.scss / dark-purple.scss
+│   ├── src/environments/
+│   │   ├── environment.ts           # infrastructureRemotes (menu/toolbar localhost URLs)
+│   │   └── environment.prod.ts      # infrastructureRemotes (gateway paths)
 │   └── proxy.conf.js                # Dev proxy: /api/menu → mock-menu.json
 │
 ├── angular-menu/            # Sidebar remote
@@ -303,17 +305,27 @@ spec:
           port: 80
 ```
 
-The shell's `federation.manifest.json` points all remotes at gateway paths:
+The shell builds its Native Federation manifest dynamically from the menu API response — each `MenuItem` carries a `remoteEntry` URL that the operator writes in from the CRD spec:
 
 ```json
-{
-  "overview":   "https://my-cluster.example.com/remotes/overview/remoteEntry.json",
-  "reports":    "https://my-cluster.example.com/remotes/reports/remoteEntry.json",
-  "analytics":  "https://my-cluster.example.com/remotes/analytics/remoteEntry.json"
-}
+GET /api/menu
+[
+  { "remote": "overview", "remoteEntry": "https://my-cluster.example.com/remotes/overview/remoteEntry.json", ... },
+  { "remote": "reports",  "remoteEntry": "https://my-cluster.example.com/remotes/reports/remoteEntry.json",  ... }
+]
 ```
 
-When a team **deploys** their chart, their `HTTPRoute` is created and traffic flows. When they **remove** it, the route disappears. No other team touches anything.
+```ts
+// main.ts — before Angular bootstraps
+const items = await fetch('/api/menu').then(r => r.json());
+const manifest = {
+  ...environment.infrastructureRemotes,            // menu, toolbar — always present
+  ...Object.fromEntries(items.map(i => [i.remote, i.remoteEntry])),  // CRD-driven
+};
+await initFederation(manifest);
+```
+
+When a team **deploys** their chart, their `HTTPRoute` is created, the operator registers the `MenuEntry`, and the shell discovers the new remote on the next load. When they **remove** it, the route disappears and the menu item is gone. No other team touches anything.
 
 ### Helm chart structure
 
@@ -513,7 +525,7 @@ Browser
 
 | App | Role | Federation |
 |---|---|---|
-| `angular-shell` | Host / shell | Consumes menu, toolbar, and overview remotes via `federation.manifest.json` |
+| `angular-shell` | Host / shell | Builds NF manifest dynamically from `/api/menu` + `environment.infrastructureRemotes` |
 | `angular-menu` | Remote | Exposes `MenuComponent` |
 | `angular-toolbar` | Remote | Exposes `ToolbarComponent` |
 | `angular-overview` | Remote | Exposes `OverviewModule` |
@@ -728,141 +740,51 @@ Combined with the menu-service's self-registration (described below), **a single
 
 ---
 
-## Going Further — Menu Service
+## Dynamic manifest — how it works today
 
-### The problem with static manifests
+There is no static `federation.manifest.json`. The shell builds its NF manifest at runtime from the menu API, which is the single source of truth for both navigation and remote loading.
 
-Right now the shell reads `federation.manifest.json` at startup to know which remotes exist and where they live:
+### Two categories of remotes
 
-```json
-{
-  "menu":     "http://localhost:4201/remoteEntry.json",
-  "toolbar":  "http://localhost:4202/remoteEntry.json",
-  "overview": "http://localhost:4203/remoteEntry.json"
+| Category | Examples | Registered via |
+|---|---|---|
+| **Infrastructure** | `menu`, `toolbar` | `environment.infrastructureRemotes` — deployed with the shell Helm chart |
+| **Feature** | `overview`, `reports`, `analytics`, `export` | `/api/menu` — driven by `MenuEntry` CRDs |
+
+### Bootstrap sequence
+
+```ts
+// main.ts — runs before Angular bootstraps
+async function bootstrap() {
+  const items: MenuItem[] = await fetch('/api/menu').then(r => r.json());
+
+  const manifest = {
+    ...environment.infrastructureRemotes,           // always present
+    ...Object.fromEntries(items.map(i => [i.remote, i.remoteEntry])),
+  };
+
+  (window as any)['__MENU_ITEMS__'] = items;        // stash — avoids double fetch
+  await initFederation(manifest);
+  await import('./bootstrap');                       // Angular starts here
 }
 ```
 
-This works, but it is **static** — adding a new micro-frontend still requires a shell rebuild to update the file. It also carries no information about *who* is allowed to load each remote, making permission checks ad-hoc and scattered across the shell.
-
-### What a menu-service looks like
-
-A **menu-service** is a small backend (REST or GraphQL) that owns the registry of all available micro-frontends and their access rules. Rather than being managed centrally, each micro-frontend **self-registers on pod startup** and **de-registers on shutdown** — the registry always reflects what is actually running in the cluster.
-
-Self-registration sequence:
-
-```
-micro-frontend pod starts
-  └── POST /api/register
-        {
-          "id":             "reporting",
-          "label":          "Reporting",
-          "icon":           "pi pi-file",
-          "remoteEntry":    "http://cluster/getModule/reporting/remoteEntry.json",
-          "exposedModule":  "./Module",
-          "routePath":      "reporting",
-          "permissions":    ["admin"]
-        }
-
-micro-frontend pod stops (preStop hook)
-  └── DELETE /api/register/reporting
-```
-
-The shell then sees `reporting` in the menu automatically — no config files touched, no shell rebuild triggered.
-
-Example full registry response:
-
-```json
-GET /api/menu-items
-
-[
-  {
-    "id": "overview",
-    "label": "Overview",
-    "icon": "pi pi-chart-bar",
-    "remoteEntry": "http://cluster/getModule/overview/remoteEntry.json",
-    "exposedModule": "./Module",
-    "routePath": "overview",
-    "permissions": ["user", "admin"]
-  },
-  {
-    "id": "reporting",
-    "label": "Reporting",
-    "icon": "pi pi-file",
-    "remoteEntry": "http://cluster/getModule/reporting/remoteEntry.json",
-    "exposedModule": "./Module",
-    "routePath": "reporting",
-    "permissions": ["admin"]
-  }
-]
-```
-
-Key fields:
-
-| Field | Purpose |
-|---|---|
-| `remoteEntry` | URL the shell passes to Native Federation's `loadRemoteModule` |
-| `exposedModule` | The federation-exposed entry point (e.g. `./Module`, `./Component`) |
-| `routePath` | Angular router path the shell registers dynamically |
-| `permissions` | Roles allowed to load this micro-frontend |
-
-### Shell integration
-
-On startup the shell:
-
-1. Authenticates the user and retrieves their roles (e.g. from a JWT).
-2. Calls `GET /api/menu-items` and filters the response to entries the user's roles satisfy.
-3. Dynamically registers Angular routes and builds the navigation menu from the filtered list — no hard-coded routes, no static manifest.
+### MenuItem interface
 
 ```ts
-// Simplified shell bootstrap
-const items = await menuService.getAuthorizedItems(userRoles);
-
-const dynamicRoutes: Routes = items.map(item => ({
-  path: item.routePath,
-  loadComponent: () =>
-    loadRemoteModule(item.remoteEntry, item.exposedModule)
-      .then(m => m.default ?? m[item.exposedModule]),
-}));
-
-router.resetConfig([...staticRoutes, ...dynamicRoutes]);
+interface MenuItem {
+  label: string;          // "Dashboard"
+  path: string;           // "dashboard"
+  icon?: string;          // "pi pi-home"
+  group?: string;         // "Overview"
+  remote: string;         // "overview"  — NF remote key
+  remoteEntry: string;    // "https://gateway/remotes/overview/remoteEntry.json"
+  exposedModule: string;  // "./routes"
+  routesExport?: string;  // "APP_ROUTES" (default)
+}
 ```
 
-With this in place, deploying a new micro-frontend to Kubernetes and adding one row to the menu-service database is all it takes — **the shell discovers and loads it automatically**, no code change required.
-
-### Fully dynamic deployment — the complete loop
-
-Combining K8s, self-registering micro-frontends, and a dynamic shell produces a system where **adding or removing a feature requires no changes to any other service**:
-
-```
-Developer ships a new micro-frontend
-  │
-  ├─ 1. helm install reporting ./charts/reporting
-  │        K8s schedules pod, chart's own Ingress rule goes live immediately
-  │
-  ├─ 2. Pod starts → POST /api/register  (self-registration)
-  │        menu-service stores the entry with its permissions
-  │
-  ├─ 3. User opens the shell
-  │        Shell fetches /api/menu-items, filters by user roles
-  │        Angular router gets a new dynamic route: /reporting
-  │        Navigation menu renders a new "Reporting" link
-  │
-  └─ 4. User navigates to /reporting
-           Shell calls loadRemoteModule(remoteEntry, exposedModule)
-           Native Federation fetches and boots the remote bundle
-           Feature is live ✓
-
-Developer removes a micro-frontend
-  │
-  ├─ 1. helm uninstall reporting
-  │        Pod shutdown triggers preStop hook → DELETE /api/register/reporting
-  │        Chart's Ingress rule is removed
-  │
-  └─ 2. Next shell load: /reporting no longer in menu-items
-           Route and nav link disappear automatically ✓
-```
-
-No shell rebuild. No config file edits. No other team unblocked or involved. Each team owns their micro-frontend from code to cluster.
+The `remoteEntry` field is set by the menu service operator when it processes a `MenuEntry` CRD — the shell never hard-codes any remote URL.
 
 ---
 
