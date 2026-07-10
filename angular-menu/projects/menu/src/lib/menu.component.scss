@@ -4,8 +4,8 @@
   top: 0;
   height: 100%;
   width: 250px;
-  background-color: var(--p-surface-0);
-  transition: transform .4s cubic-bezier(.05,.74,.2,.99);
+  background-color: var(--app-sidebar-background);
+  transition: background-color 0.3s, transform .4s cubic-bezier(.05,.74,.2,.99);
   user-select: none;
 
   .logo {

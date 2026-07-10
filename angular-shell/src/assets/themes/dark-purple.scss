@@ -1,6 +1,9 @@
-/* Dark theme - applied via .dark-theme body class which activates Aura dark mode. */
+/* Dark theme — applied via .dark-theme on body, activating PrimeNG Aura dark tokens. */
 
 .dark-theme {
   --sgre-icon: url(../../assets/icons/sgre-logo.svg);
   color-scheme: dark;
+
+  /* Override custom app tokens to use dark-appropriate surfaces */
+  --app-sidebar-background: var(--p-surface-900);
 }

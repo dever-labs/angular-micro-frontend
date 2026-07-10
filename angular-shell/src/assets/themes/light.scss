@@ -1,5 +1,6 @@
-/* Light theme - uses Aura preset (default). Dark mode is toggled via .dark-theme on body. */
+/* Light theme defaults — body/sidebar use PrimeNG semantic tokens */
 
 :root {
   --sgre-icon: url(../../assets/icons/sgre-logo.svg);
+  --app-sidebar-background: var(--p-surface-0);
 }
