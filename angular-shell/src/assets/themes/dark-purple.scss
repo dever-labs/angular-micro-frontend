@@ -13,7 +13,7 @@
    * hasn't applied), locking them to the light value. Re-declare here so they resolve correctly
    * in the body.dark-theme scope where --p-content-background is already #18181b.
    */
-  --p-card-background: var(--p-content-background);
+  --p-card-background: var(--p-surface-800);
   --p-card-color: var(--p-text-color);
   --p-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
 }
