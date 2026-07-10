@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Dashboard",
+    "path": "dashboard",
+    "icon": "pi pi-chart-bar",
+    "group": "Analytics",
+    "remote": "overview",
+    "exposedModule": "./routes"
+  }
+]
