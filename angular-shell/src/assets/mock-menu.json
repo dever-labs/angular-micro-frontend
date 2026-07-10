@@ -2,7 +2,7 @@
   {
     "label": "Dashboard",
     "path": "dashboard",
-    "icon": "",
+    "icon": "pi pi-home",
     "group": "Overview",
     "remote": "overview",
     "exposedModule": "./routes"
@@ -10,24 +10,24 @@
   {
     "label": "Reports",
     "path": "reports",
-    "icon": "",
-    "group": "Overview",
+    "icon": "pi pi-file-pdf",
+    "group": "Reports",
     "remote": "reports",
     "exposedModule": "./routes"
   },
   {
     "label": "Analytics",
     "path": "analytics",
-    "icon": "",
-    "group": "Overview",
+    "icon": "pi pi-chart-bar",
+    "group": "Analytics",
     "remote": "analytics",
     "exposedModule": "./routes"
   },
   {
     "label": "Export",
     "path": "export",
-    "icon": "",
-    "group": "Overview",
+    "icon": "pi pi-download",
+    "group": "Export",
     "remote": "export",
     "exposedModule": "./routes"
   }

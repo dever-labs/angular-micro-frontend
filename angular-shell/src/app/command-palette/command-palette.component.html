@@ -33,7 +33,7 @@
               <i class="palette-item-icon pi pi-file"></i>
             }
             <span class="palette-item-label">{{ item.label }}</span>
-            @if (item.group) {
+            @if (item.group && showGroups()) {
               <span class="palette-item-group">{{ item.group }}</span>
             }
             <i class="palette-item-enter pi pi-arrow-right"></i>

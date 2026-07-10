@@ -34,6 +34,11 @@ export class CommandPaletteComponent {
     return q ? items.filter(i => i.label.toLowerCase().includes(q)) : items;
   });
 
+  readonly showGroups = computed(() => {
+    const groups = new Set(this.filtered().map(i => i.group ?? ''));
+    return groups.size > 1;
+  });
+
   constructor() {
     // Open when any MFE (e.g. the menu sidebar) calls appState.openSearch()
     effect(() => {
