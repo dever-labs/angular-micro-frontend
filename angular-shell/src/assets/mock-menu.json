@@ -11,7 +11,7 @@
     "label": "Reports",
     "path": "reports",
     "icon": "pi pi-file-pdf",
-    "group": "Reports",
+    "group": "Overview",
     "remote": "reports",
     "exposedModule": "./routes"
   },
@@ -19,7 +19,7 @@
     "label": "Analytics",
     "path": "analytics",
     "icon": "pi pi-chart-bar",
-    "group": "Analytics",
+    "group": "Overview",
     "remote": "analytics",
     "exposedModule": "./routes"
   },
@@ -27,7 +27,7 @@
     "label": "Export",
     "path": "export",
     "icon": "pi pi-download",
-    "group": "Export",
+    "group": "Overview",
     "remote": "export",
     "exposedModule": "./routes"
   }
