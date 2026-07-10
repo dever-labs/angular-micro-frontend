@@ -1,3 +1,10 @@
+/**
+ * Menu item contract for this application.
+ *
+ * Defines the shape stored in MenuRegistryService and returned by the menu API.
+ * NF-specific routing fields (remote, remoteEntry, exposedModule) are
+ * intentionally here — they are app/infrastructure concerns, not broker concerns.
+ */
 export interface MenuItem {
   /** Display label shown in the menu. */
   label: string;
