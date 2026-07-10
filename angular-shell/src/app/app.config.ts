@@ -5,7 +5,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { firstValueFrom } from 'rxjs';
-import { MenuItem, MenuRegistryService, provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
+import { MenuItem, MenuRegistryService, MFE_INITIAL_STATE, provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
 import { routes } from './app.routes';
 import { STATIC_ROUTES } from './static-routes.token';
 import { MenuRouterSyncService } from './menu-router-sync.service';
@@ -25,19 +25,11 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideNgxMfeBroker({
-      initialState: {
-        theme: 'light-theme',
-        token: null,
-        uri: null,
-        users: [],
-      },
-    }),
-    // Provide static routes so MenuRouterSyncService can append them after dynamic ones.
+    // Shell is the single source of truth for initial state defaults.
+    // Remote MFEs just inject MfeStateService — no provideNgxMfeBroker needed there.
+    provideNgxMfeBroker({ initialState: MFE_INITIAL_STATE }),
     { provide: STATIC_ROUTES, useValue: routes },
-    // Eagerly instantiate the sync service so its effect() starts immediately.
     provideAppInitializer(() => void inject(MenuRouterSyncService)),
-    // Menu items were pre-fetched in main.ts before initFederation — reuse them.
     provideAppInitializer(async () => {
       const menuRegistry = inject(MenuRegistryService);
       const preloaded = (window as unknown as Record<string, unknown>)['__MENU_ITEMS__'] as MenuItem[] | undefined;
@@ -45,7 +37,6 @@ export const appConfig: ApplicationConfig = {
         menuRegistry.load(preloaded);
         return;
       }
-      // Fallback: re-fetch (e.g. during unit tests where main.ts doesn't run).
       const http = inject(HttpClient);
       try {
         const items = await firstValueFrom(http.get<MenuItem[]>('/api/menu'));

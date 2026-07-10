@@ -1,20 +1,20 @@
 import { effect, inject, Injectable, DOCUMENT } from "@angular/core";
-import { MfeStateService } from "@dever-labs/ngx-mfe-broker";
+import { injectMfeState } from "@dever-labs/ngx-mfe-broker";
 
 @Injectable({
   providedIn: "root",
 })
 export class ThemeService {
   private readonly document = inject(DOCUMENT);
-  private readonly mfeState = inject(MfeStateService);
+  private readonly state = injectMfeState();
 
   get theme(): string {
-    return this.mfeState.get<string>('theme')();
+    return this.state.theme();
   }
 
   constructor() {
     effect(() => {
-      this.applyTheme(this.mfeState.get<string>('theme')());
+      this.applyTheme(this.state.theme());
     });
   }
 
