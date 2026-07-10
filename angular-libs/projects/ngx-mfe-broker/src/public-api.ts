@@ -4,5 +4,4 @@
 
 export * from './lib/mfe-state.service';
 export * from './lib/config-repository.service';
-export * from './lib/menu-registry.service';
 export * from './lib/provide-ngx-mfe-broker';

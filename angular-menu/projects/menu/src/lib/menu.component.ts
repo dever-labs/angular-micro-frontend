@@ -1,7 +1,7 @@
 import { Component, computed, inject } from "@angular/core";
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
+import { MenuRegistryService } from '@app/mfe-state-model';
 import { injectAppState } from '@app/mfe-state-model';
 
 @Component({

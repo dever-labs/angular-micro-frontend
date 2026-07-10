@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuRegistryService } from '@dever-labs/ngx-mfe-broker';
+import { MenuRegistryService } from '@app/mfe-state-model';
 import { injectAppState } from '@app/mfe-state-model';
 
 @Component({

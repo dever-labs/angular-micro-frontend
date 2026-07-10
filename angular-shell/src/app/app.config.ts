@@ -5,8 +5,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { firstValueFrom } from 'rxjs';
-import { MenuRegistryService, provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
-import { APP_INITIAL_STATE, MenuItem } from '@app/mfe-state-model';
+import { provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
+import { APP_INITIAL_STATE, MenuItem, MenuRegistryService } from '@app/mfe-state-model';
 import { routes } from './app.routes';
 import { STATIC_ROUTES } from './static-routes.token';
 import { MenuRouterSyncService } from './menu-router-sync.service';
