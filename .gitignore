@@ -1,5 +1,6 @@
 node_modules/
 **/dist/
 **/.angular/
+**/.DS_Store
 playwright-report/
 test-results/
