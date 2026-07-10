@@ -13,26 +13,66 @@
   [rounded]="true"
   [text]="true"
   (click)="op.toggle($event)"
-  icon="pi pi-cog"
+  icon="pi pi-sun"
+  [icon]="currentTheme() === 'dark-theme' ? 'pi pi-moon' : 'pi pi-sun'"
 >
 </p-button>
 
-<p-popover #op styleClass="theme-menu">
-  <p-button
-    label="Light"
-    [text]="true"
-    styleClass="light"
-    (click)="changeTheme('light-theme')"
-  >
-    <span class="color-circle"></span>
-  </p-button>
+<p-popover #op>
+  <div class="appearance-panel">
+    <div class="appearance-header">
+      <i class="pi pi-palette"></i>
+      <span>Appearance</span>
+    </div>
 
-  <p-button
-    label="Dark"
-    [text]="true"
-    styleClass="dark"
-    (click)="changeTheme('dark-theme')"
-  >
-    <span class="color-circle"></span>
-  </p-button>
+    <div class="theme-cards">
+      <button
+        class="theme-card"
+        [class.active]="currentTheme() === 'light-theme'"
+        (click)="changeTheme('light-theme')"
+        type="button"
+      >
+        <div class="theme-preview light-preview">
+          <div class="preview-sidebar"></div>
+          <div class="preview-content">
+            <div class="preview-topbar"></div>
+            <div class="preview-cards">
+              <div class="preview-card"></div>
+              <div class="preview-card"></div>
+            </div>
+          </div>
+        </div>
+        <div class="theme-label">
+          <span>Light</span>
+          @if (currentTheme() === 'light-theme') {
+            <i class="pi pi-check-circle"></i>
+          }
+        </div>
+      </button>
+
+      <button
+        class="theme-card"
+        [class.active]="currentTheme() === 'dark-theme'"
+        (click)="changeTheme('dark-theme')"
+        type="button"
+      >
+        <div class="theme-preview dark-preview">
+          <div class="preview-sidebar"></div>
+          <div class="preview-content">
+            <div class="preview-topbar"></div>
+            <div class="preview-cards">
+              <div class="preview-card"></div>
+              <div class="preview-card"></div>
+            </div>
+          </div>
+        </div>
+        <div class="theme-label">
+          <span>Dark</span>
+          @if (currentTheme() === 'dark-theme') {
+            <i class="pi pi-check-circle"></i>
+          }
+        </div>
+      </button>
+    </div>
+  </div>
 </p-popover>

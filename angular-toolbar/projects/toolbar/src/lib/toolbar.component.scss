@@ -15,3 +15,121 @@
     transition: background-color 0.4s cubic-bezier(.05,.74,.2,.80);
   }
 }
+
+// Appearance popover panel
+.appearance-panel {
+  width: 220px;
+}
+
+.appearance-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--p-text-muted-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--p-content-border-color);
+}
+
+.theme-cards {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.theme-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: none;
+  border: 2px solid var(--p-content-border-color);
+  border-radius: var(--p-border-radius-lg);
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+
+  &:hover {
+    border-color: var(--p-primary-300, var(--p-primary-color));
+  }
+
+  &.active {
+    border-color: var(--p-primary-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--p-primary-color) 20%, transparent);
+  }
+}
+
+// Mini UI preview inside each card
+.theme-preview {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: calc(var(--p-border-radius-md) - 2px);
+  overflow: hidden;
+  display: flex;
+
+  &.light-preview {
+    background: #f8f9fa;
+
+    .preview-sidebar { background: #e9ecef; }
+    .preview-topbar  { background: #dee2e6; }
+    .preview-card    { background: #ffffff; }
+  }
+
+  &.dark-preview {
+    background: #18181b;
+
+    .preview-sidebar { background: #27272a; }
+    .preview-topbar  { background: #27272a; }
+    .preview-card    { background: #3f3f46; }
+  }
+}
+
+.preview-sidebar {
+  width: 28%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.preview-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  gap: 3px;
+}
+
+.preview-topbar {
+  height: 12px;
+  border-radius: 2px;
+}
+
+.preview-cards {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
+.preview-card {
+  border-radius: 2px;
+}
+
+.theme-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--p-text-color);
+  padding: 0 0.125rem;
+
+  .pi-check-circle {
+    color: var(--p-primary-color);
+    font-size: 0.875rem;
+  }
+}
+
