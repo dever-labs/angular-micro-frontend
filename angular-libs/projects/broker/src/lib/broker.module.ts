@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrokerService } from './broker.service';
-import { ConfigRepositoryService } from './config/config-repository.service';
-import { ConfigFacadeService } from './config/config-facade.service';
 
-@NgModule({
-  declarations: [],
-  providers: [BrokerService, ConfigRepositoryService, ConfigFacadeService],
-})
+/** @deprecated All broker services are providedIn: 'root' — this module is no longer required. */
+@NgModule({})
 export class BrokerModule {}

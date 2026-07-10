@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs";
+import { ChartModule } from 'primeng/chart';
 
 @Component({
     selector: 'lib-wind-directions-chart',
     templateUrl: './wind-directions-chart.component.html',
     styleUrls: ['./wind-directions-chart.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [ChartModule],
 })
 export class WindDirectionsChartComponent implements OnInit {
   public data: any;
   public chartOptions: any;
-  public subscription!: Subscription;
 
   ngOnInit() {
     this.data = {

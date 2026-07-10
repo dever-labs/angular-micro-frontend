@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs";
+import { ChartModule } from 'primeng/chart';
 
 @Component({
     selector: 'lib-wind-speeds',
     templateUrl: './wind-speeds.component.html',
     styleUrls: ['./wind-speeds.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [ChartModule],
 })
 export class WindSpeedsComponent implements OnInit {
   public data: any;
   public chartOptions: any;
-  public subscription!: Subscription;
 
   ngOnInit() {
     this.data = {

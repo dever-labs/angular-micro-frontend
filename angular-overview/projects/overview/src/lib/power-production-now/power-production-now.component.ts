@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs";
+import { ChartModule } from 'primeng/chart';
 
 @Component({
     selector: 'lib-power-production-now',
     templateUrl: './power-production-now.component.html',
     styleUrls: ['./power-production-now.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [ChartModule],
 })
 export class PowerProductionNowComponent implements OnInit {
   public data: any;
   public chartOptions: any;
-  public subscription!: Subscription;
 
   ngOnInit() {
     this.data = {

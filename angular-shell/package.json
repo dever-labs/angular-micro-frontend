@@ -10,7 +10,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-architects/module-federation": "^21.2.2",
     "@angular-architects/native-federation": "^22.0.4",
     "@angular-devkit/core": "^22.0.5",
     "@angular/animations": "^22.0.6",
@@ -22,15 +21,13 @@
     "@angular/platform-browser-dynamic": "^22.0.6",
     "@angular/router": "^22.0.6",
     "@czprz/broker": "file:../angular-libs/dist/broker",
-    "@softarc/native-federation-node": "^3.3.4",
     "chart.js": "^4.4.0",
-    "es-module-shims": "^1.5.12",
+    "es-module-shims": "^2.8.2",
     "oxc-parser": "^0.8.0",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.4",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
-    "zone.js": "~0.15.1",
     "@primeuix/themes": "^2.0.3"
   },
   "overrides": {

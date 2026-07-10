@@ -73,7 +73,6 @@
             "outputPath": "dist/shell",
             "index": "src/index.html",
             "polyfills": [
-              "src/polyfills.ts",
               "es-module-shims"
             ],
             "tsConfig": "tsconfig.app.json",

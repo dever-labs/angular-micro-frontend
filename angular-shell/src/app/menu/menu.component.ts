@@ -5,7 +5,7 @@ import { loadRemoteModule } from "@angular-architects/native-federation";
     selector: "app-menu",
     templateUrl: "./menu.component.html",
     styleUrls: ["./menu.component.scss"],
-    standalone: false
+    standalone: true,
 })
 export class MenuComponent implements AfterViewInit {
   @ViewChild("menuPlaceholder", { read: ViewContainerRef })

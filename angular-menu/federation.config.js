@@ -14,6 +14,7 @@ module.exports = withNativeFederation({
     'rxjs/fetch',
     'rxjs/testing',
     'rxjs/webSocket',
+    'zone.js',
   ],
   features: {
     ignoreUnusedDeps: true,

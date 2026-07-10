@@ -3,7 +3,7 @@ const { withNativeFederation, shareAll } = require('@angular-architects/native-f
 module.exports = withNativeFederation({
   name: 'overview',
   exposes: {
-    './Module': './projects/overview/src/lib/overview.module.ts',
+    './Component': './projects/overview/src/lib/overview.component.ts',
   },
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
@@ -14,7 +14,11 @@ module.exports = withNativeFederation({
     'rxjs/fetch',
     'rxjs/testing',
     'rxjs/webSocket',
+    'zone.js',
   ],
+  features: {
+    ignoreUnusedDeps: true,
+  },
   features: {
     ignoreUnusedDeps: true,
   },

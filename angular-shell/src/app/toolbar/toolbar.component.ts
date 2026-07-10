@@ -5,7 +5,7 @@ import { loadRemoteModule } from "@angular-architects/native-federation";
     selector: "app-toolbar",
     templateUrl: "./toolbar.component.html",
     styleUrls: ["./toolbar.component.scss"],
-    standalone: false
+    standalone: true,
 })
 export class ToolbarComponent implements AfterViewInit {
   @ViewChild("toolbarPlaceholder", { read: ViewContainerRef }) toolbarPlaceholder!: ViewContainerRef;
