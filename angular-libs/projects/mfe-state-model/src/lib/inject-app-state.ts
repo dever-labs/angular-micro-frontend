@@ -49,6 +49,9 @@ export function injectAppState() {
     users: mfe.get<AppState['users']>(APP_STATE_KEYS.users),
     menu: mfe.get<AppState['menu']>(APP_STATE_KEYS.menu),
     searchOpen: mfe.get<AppState['searchOpen']>(APP_STATE_KEYS.searchOpen),
-    openSearch: () => mfe.get<number>(APP_STATE_KEYS.searchOpen).update(n => n + 1),
+    openSearch: () => {
+      const s = mfe.get<number>(APP_STATE_KEYS.searchOpen);
+      s.set((s() % 100) + 1);
+    },
   };
 }

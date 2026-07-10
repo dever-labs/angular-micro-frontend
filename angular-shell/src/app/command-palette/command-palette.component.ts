@@ -39,8 +39,8 @@ export class CommandPaletteComponent {
 
   constructor() {
     effect(() => {
-      const _ = this.state.searchOpen();
-      if (this.state.searchOpen() > 0) this.open();
+      const n = Math.min(Math.max(this.state.searchOpen(), 0), 100);
+      if (n > 0) this.open();
     }, { allowSignalWrites: true });
   }
 
