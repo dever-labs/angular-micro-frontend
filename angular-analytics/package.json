@@ -1,0 +1,38 @@
+{
+  "name": "angular-analytics",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "node ../node_modules/@angular/cli/bin/bootstrap.js serve --port 4205",
+    "build": "node ../node_modules/@angular/cli/bin/bootstrap.js build",
+    "postinstall": "node -e \"try{require('../scripts/install-native-bindings.js')}catch(e){}\""
+  },
+  "private": true,
+  "dependencies": {
+    "@angular-architects/native-federation": "^22.0.4",
+    "@czprz/broker": "file:../angular-libs/dist/broker",
+    "@angular/animations": "^22.0.6",
+    "@angular/common": "^22.0.6",
+    "@angular/compiler": "^22.0.6",
+    "@angular/core": "^22.0.6",
+    "@angular/forms": "^22.0.6",
+    "@angular/platform-browser": "^22.0.6",
+    "@angular/router": "^22.0.6",
+    "es-module-shims": "^2.8.2",
+    "primeicons": "^7.0.0",
+    "primeng": "^21.1.9",
+    "rxjs": "~7.8.1",
+    "tslib": "^2.6.2"
+  },
+  "overrides": {
+    "esbuild": "0.28.1",
+    "http-proxy-middleware": "3.0.7",
+    "@babel/core": "7.29.7"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^22.0.6",
+    "@angular/cli": "~22.0.6",
+    "@angular/compiler-cli": "^22.0.6",
+    "typescript": "~6.0.3"
+  }
+}

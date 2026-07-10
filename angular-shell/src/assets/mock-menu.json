@@ -12,7 +12,7 @@
     "path": "reports",
     "icon": "",
     "group": "Overview",
-    "remote": "overview",
+    "remote": "reports",
     "exposedModule": "./routes"
   },
   {
@@ -20,7 +20,7 @@
     "path": "analytics",
     "icon": "",
     "group": "Overview",
-    "remote": "overview",
+    "remote": "analytics",
     "exposedModule": "./routes"
   },
   {
@@ -28,7 +28,7 @@
     "path": "export",
     "icon": "",
     "group": "Overview",
-    "remote": "overview",
+    "remote": "export",
     "exposedModule": "./routes"
   }
 ]
