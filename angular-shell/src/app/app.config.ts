@@ -6,7 +6,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { firstValueFrom } from 'rxjs';
 import { provideNgxMfeBroker } from '@dever-labs/ngx-mfe-broker';
-import { APP_INITIAL_STATE, MenuItem, MenuRegistryService } from '@app/mfe-state-model';
+import { APP_INITIAL_STATE, injectAppState, MenuItem } from '@app/mfe-state-model';
 import { routes } from './app.routes';
 import { STATIC_ROUTES } from './static-routes.token';
 import { MenuRouterSyncService } from './menu-router-sync.service';
@@ -27,21 +27,21 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     // Shell is the single source of truth for initial state defaults.
-    // Remote MFEs just inject MfeStateService — no provideNgxMfeBroker needed there.
+    // Remote MFEs just call injectAppState() — no provideNgxMfeBroker needed there.
     provideNgxMfeBroker({ initialState: APP_INITIAL_STATE }),
     { provide: STATIC_ROUTES, useValue: routes },
     provideAppInitializer(() => void inject(MenuRouterSyncService)),
     provideAppInitializer(async () => {
-      const menuRegistry = inject(MenuRegistryService);
+      const state = injectAppState();
       const preloaded = (window as unknown as Record<string, unknown>)['__MENU_ITEMS__'] as MenuItem[] | undefined;
       if (preloaded) {
-        menuRegistry.load(preloaded);
+        state.menu.set(preloaded);
         return;
       }
       const http = inject(HttpClient);
       try {
         const items = await firstValueFrom(http.get<MenuItem[]>('/api/menu'));
-        menuRegistry.load(items);
+        state.menu.set(items);
       } catch (err) {
         console.error('[shell] Failed to load menu configuration:', err);
       }

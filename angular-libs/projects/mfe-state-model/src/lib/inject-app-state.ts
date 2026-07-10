@@ -11,6 +11,7 @@ export const APP_STATE_KEYS: { [K in keyof AppState]: K } = {
   token: 'token',
   uri: 'uri',
   users: 'users',
+  menu: 'menu',
 } as const;
 
 /**
@@ -23,19 +24,19 @@ export const APP_INITIAL_STATE: AppState = {
   token: null,
   uri: null,
   users: [],
+  menu: [],
 };
 
 /**
  * Typed accessor for the shared MFE state.
  * Call in any injection context (constructor, field initialiser, inject()).
  *
- * Returns a strongly-typed object of WritableSignals matching AppState.
- * Adding a field to AppState will surface as a missing property here.
- *
  * @example
  * readonly state = injectAppState();
  * // template:  {{ state.theme() }}
  * // code:      state.theme.set('dark-theme');
+ * //            state.menu()          → MenuItem[]
+ * //            state.menu.set([...]) → update menu for all MFEs
  */
 export function injectAppState() {
   const mfe = inject(MfeStateService);
@@ -44,6 +45,7 @@ export function injectAppState() {
     token: mfe.get<AppState['token']>(APP_STATE_KEYS.token),
     uri: mfe.get<AppState['uri']>(APP_STATE_KEYS.uri),
     users: mfe.get<AppState['users']>(APP_STATE_KEYS.users),
+    menu: mfe.get<AppState['menu']>(APP_STATE_KEYS.menu),
     searchOpen: mfe.searchOpen,
     openSearch: () => mfe.openSearch(),
   };

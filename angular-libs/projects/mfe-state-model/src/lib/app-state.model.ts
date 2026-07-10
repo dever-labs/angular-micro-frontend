@@ -1,3 +1,5 @@
+import { MenuItem } from './menu-item.model';
+
 /**
  * The shared state contract for this application.
  *
@@ -14,4 +16,5 @@ export interface AppState extends Record<string, unknown> {
   token: string | null;
   uri: string | null;
   users: string[];
+  menu: MenuItem[];
 }

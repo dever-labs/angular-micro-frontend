@@ -1,15 +1,13 @@
-import {
+import { inject,
   Component,
   computed,
   effect,
   ElementRef,
   HostListener,
-  inject,
   signal,
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuRegistryService } from '@app/mfe-state-model';
 import { injectAppState } from '@app/mfe-state-model';
 
 @Component({
@@ -22,7 +20,6 @@ export class CommandPaletteComponent {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   private readonly router = inject(Router);
-  private readonly menuRegistry = inject(MenuRegistryService);
   private readonly state = injectAppState();
 
   readonly visible = signal(false);
@@ -31,7 +28,7 @@ export class CommandPaletteComponent {
 
   readonly filtered = computed(() => {
     const q = this.query().toLowerCase().trim();
-    const items = this.menuRegistry.items();
+    const items = this.state.menu();
     return q ? items.filter(i => i.label.toLowerCase().includes(q)) : items;
   });
 
@@ -41,12 +38,9 @@ export class CommandPaletteComponent {
   });
 
   constructor() {
-    // Open when any MFE (e.g. the menu sidebar) calls appState.openSearch()
     effect(() => {
-      const _ = this.state.searchOpen(); // track signal
-      if (this.state.searchOpen() > 0) {
-        this.open();
-      }
+      const _ = this.state.searchOpen();
+      if (this.state.searchOpen() > 0) this.open();
     }, { allowSignalWrites: true });
   }
 
@@ -64,9 +58,7 @@ export class CommandPaletteComponent {
     }
 
     switch (event.key) {
-      case 'Escape':
-        this.close();
-        break;
+      case 'Escape': this.close(); break;
       case 'ArrowDown':
         event.preventDefault();
         this.activeIndex.update(i => Math.min(i + 1, this.filtered().length - 1));
@@ -89,9 +81,7 @@ export class CommandPaletteComponent {
     setTimeout(() => this.searchInput?.nativeElement.focus(), 0);
   }
 
-  close(): void {
-    this.visible.set(false);
-  }
+  close(): void { this.visible.set(false); }
 
   onQuery(value: string): void {
     this.query.set(value);

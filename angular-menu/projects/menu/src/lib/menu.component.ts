@@ -1,7 +1,6 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed } from "@angular/core";
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
-import { MenuRegistryService } from '@app/mfe-state-model';
 import { injectAppState } from '@app/mfe-state-model';
 
 @Component({
@@ -12,12 +11,11 @@ import { injectAppState } from '@app/mfe-state-model';
     imports: [RouterLink, ButtonModule],
 })
 export class MenuComponent {
-  private readonly menuRegistry = inject(MenuRegistryService);
   readonly state = injectAppState();
 
   readonly groups = computed(() => {
     const groupMap = new Map<string, { label: string; path: string; icon?: string }[]>();
-    for (const item of this.menuRegistry.items()) {
+    for (const item of this.state.menu()) {
       const key = item.group ?? 'Menu';
       if (!groupMap.has(key)) groupMap.set(key, []);
       groupMap.get(key)!.push({ label: item.label, path: item.path, icon: item.icon });

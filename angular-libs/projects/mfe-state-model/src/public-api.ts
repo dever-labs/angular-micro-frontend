@@ -10,4 +10,3 @@
 export * from './lib/app-state.model';
 export * from './lib/inject-app-state';
 export * from './lib/menu-item.model';
-export * from './lib/menu-registry.service';

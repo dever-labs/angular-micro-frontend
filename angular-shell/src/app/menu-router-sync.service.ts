@@ -1,20 +1,18 @@
 import { effect, inject, Injectable } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { loadRemoteModule } from '@angular-architects/native-federation';
-import { MenuRegistryService } from '@app/mfe-state-model';
-import { MenuItem } from '@app/mfe-state-model';
+import { injectAppState, MenuItem } from '@app/mfe-state-model';
 import { STATIC_ROUTES } from './static-routes.token';
 
 @Injectable({ providedIn: 'root' })
 export class MenuRouterSyncService {
   constructor() {
     const router = inject(Router);
-    const menuRegistry = inject(MenuRegistryService);
+    const state = injectAppState();
     const staticRoutes = inject(STATIC_ROUTES);
 
     effect(() => {
-      const items = menuRegistry.items();
-      router.resetConfig([...this.buildRoutes(items), ...staticRoutes]);
+      router.resetConfig([...this.buildRoutes(state.menu()), ...staticRoutes]);
     });
   }
 
