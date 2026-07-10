@@ -79,11 +79,13 @@ export class MfeStateService implements OnDestroy {
     });
   }
 
-  /** Get a typed Signal for the given key. */
+  /** Get a typed Signal for the given key. Key must be registered in `NGX_MFE_INITIAL_STATE`. */
   get<T>(key: string): WritableSignal<T> {
     if (!this.signals.has(key)) {
-      const raw = localStorage.getItem(key);
-      this.signals.set(key, signal(raw !== null ? deserialize(raw, null) : null));
+      throw new Error(
+        `[ngx-mfe-broker] Unknown state key "${key}". ` +
+        `Register it in NGX_MFE_INITIAL_STATE via provideNgxMfeBroker({ initialState: { ${key}: <default> } }).`,
+      );
     }
     return this.signals.get(key) as WritableSignal<T>;
   }
