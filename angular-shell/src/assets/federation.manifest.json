@@ -1,8 +1,0 @@
-{
-  "menu": "http://localhost:4201/remoteEntry.json",
-  "toolbar": "http://localhost:4202/remoteEntry.json",
-  "overview": "http://localhost:4203/remoteEntry.json",
-  "reports": "http://localhost:4204/remoteEntry.json",
-  "analytics": "http://localhost:4205/remoteEntry.json",
-  "export": "http://localhost:4206/remoteEntry.json"
-}

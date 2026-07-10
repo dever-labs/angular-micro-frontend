@@ -29,11 +29,16 @@ export const appConfig: ApplicationConfig = {
     { provide: STATIC_ROUTES, useValue: routes },
     // Eagerly instantiate the sync service so its effect() starts immediately.
     provideAppInitializer(() => void inject(MenuRouterSyncService)),
-    // Fetch menu from API; MenuRouterSyncService effect() will reset router automatically.
+    // Menu items were pre-fetched in main.ts before initFederation — reuse them.
     provideAppInitializer(async () => {
-      const http = inject(HttpClient);
       const menuRegistry = inject(MenuRegistryService);
-
+      const preloaded = (window as unknown as Record<string, unknown>)['__MENU_ITEMS__'] as MenuItem[] | undefined;
+      if (preloaded) {
+        menuRegistry.load(preloaded);
+        return;
+      }
+      // Fallback: re-fetch (e.g. during unit tests where main.ts doesn't run).
+      const http = inject(HttpClient);
       try {
         const items = await firstValueFrom(http.get<MenuItem[]>('/api/menu'));
         menuRegistry.load(items);
