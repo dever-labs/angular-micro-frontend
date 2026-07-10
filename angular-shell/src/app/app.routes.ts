@@ -5,8 +5,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 export const routes: Routes = [
   {
     path: 'dashboard',
-    loadComponent: () =>
-      loadRemoteModule('overview', './Component').then(m => m.OverviewComponent),
+    loadChildren: () =>
+      loadRemoteModule('overview', './routes').then(m => m.APP_ROUTES),
   },
   {
     path: '**',

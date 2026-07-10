@@ -4,6 +4,7 @@ module.exports = withNativeFederation({
   name: 'overview',
   exposes: {
     './Component': './projects/overview/src/lib/overview.component.ts',
+    './routes': './projects/overview/src/lib/overview.routes.ts',
   },
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
