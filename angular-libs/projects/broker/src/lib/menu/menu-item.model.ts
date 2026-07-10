@@ -11,4 +11,6 @@ export interface MenuItem {
   remote: string;
   /** Exposed module path on the remote (e.g. "./routes") */
   exposedModule: string;
+  /** Exported routes array name on the remote module (defaults to "APP_ROUTES"). */
+  routesExport?: string;
 }

@@ -21,7 +21,8 @@ export class MenuRouterSyncService {
     return items.map(item => ({
       path: item.path,
       loadChildren: () =>
-        loadRemoteModule(item.remote, item.exposedModule).then(m => m.APP_ROUTES),
+        loadRemoteModule(item.remote, item.exposedModule)
+          .then(m => m[item.routesExport ?? 'APP_ROUTES']),
     }));
   }
 }
