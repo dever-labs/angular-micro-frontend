@@ -16,4 +16,11 @@
   --p-card-background: var(--p-surface-800);
   --p-card-color: var(--p-text-color);
   --p-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+
+  /* Overlay components (popover, dialog, menu) share the same :root-lock issue */
+  --p-popover-background: var(--p-surface-800);
+  --p-popover-border-color: var(--p-surface-700);
+  --p-popover-color: var(--p-text-color);
+  --p-overlay-popover-background: var(--p-surface-800);
+  --p-overlay-popover-border-color: var(--p-surface-700);
 }
