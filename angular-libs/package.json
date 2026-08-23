@@ -44,6 +44,6 @@
     "karma-jasmine-html-reporter": "~2.2.0",
     "ng-packagr": "^22.0.1",
     "typescript": "~7.0.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.1.11"
   }
 }
