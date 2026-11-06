@@ -1,0 +1,25 @@
+# Describes this repository in devhub (https://hub.dever.dk), dever-labs'
+# developer portal. devhub's GitHub discovery reads this file from the
+# default branch.
+# devhub's "New Angular micro-frontend app" template copies this repository
+# and adds its own catalog-info.yaml to the new repo.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: angular-micro-frontend
+  namespace: devtools
+  title: Angular micro-frontend reference
+  description: >
+    Angular micro-frontend reference — a shell plus independent remotes
+    composed at runtime with Native Federation, signals, zoneless, a menu
+    from a REST API, and Kubernetes HTTPRoute/CRD deployment patterns.
+  annotations:
+    github.com/project-slug: dever-labs/angular-micro-frontend
+  tags: [typescript, angular, micro-frontends]
+spec:
+  type: template
+  lifecycle: production
+  owner: group:devtools/engineering
+  system: system:devtools/templates
+  dependsOn:
+    - component:devtools/ngx-mfe-broker
